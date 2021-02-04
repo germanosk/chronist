@@ -26,6 +26,7 @@ class ChronicleSheet extends ResourceController {
         $data = $chronicleModel->where('idChronicleSheet', $id)->first();
         $fieldModel = new SheetFieldsModel();
         $data['fields'] = $fieldModel->where('idChronicleSheet', $id)->findAll();
+        obsfucateIds($data["fields"], 'idAdventureField');
         $data['idChronicleSheet'] = $ofuscatedID;
         if ($data) {
             return $this->respond($data);

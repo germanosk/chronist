@@ -277,12 +277,10 @@ PDFAnnotate.prototype.serializePdf = function() {
 	var inst = this;
 	return JSON.stringify(inst.fabricObjects, null, 4);
 }
-PDFAnnotate.prototype.insertText = function(content, posX, posY, w, h){
+
+PDFAnnotate.prototype.insertText = function(updateCallback, content, posX, posY, w, h){
     var inst = this;
-    console.log("active "+this.active_canvas);
-    console.log("fabricObjects "+this.fabricObjects);
     var fabricObj = this.fabricObjects[inst.active_canvas];
-    console.log("w "+w+" h "+h);
     
     var text = new fabric.Textbox(content, {
         left: posX,
@@ -297,10 +295,12 @@ PDFAnnotate.prototype.insertText = function(content, posX, posY, w, h){
         lockMovementY: true,
         lockScalingX: true,
         lockScalingY: true,
+        lockRotation: true,
         fixedWidth: w
     });
     text.on('changed', function(opt) {
         var t1 = text;
+        updateCallback(t1.text);
         console.log(t1.fixedWidth);
         if (t1.width > t1.fixedWidth) {
           t1.fontSize *= t1.fixedWidth / (t1.width + 1);
@@ -312,6 +312,54 @@ PDFAnnotate.prototype.insertText = function(content, posX, posY, w, h){
     });
     fabricObj.add(text);
     return text;
+}
+
+PDFAnnotate.prototype.insertBlock = function(updateCallback, posX, posY, w, h){
+        
+	var fabricObj = this.fabricObjects[this.active_canvas];
+	this.active_tool = 4;
+	if (this.fabricObjects.length > 0) {
+		$.each(this.fabricObjects, function (index, fabricObj) {
+			fabricObj.isDrawingMode = false;
+		});
+	}
+
+	var rect = new fabric.Rect({
+                left: posX,
+                top: posY,
+		width: w,
+		height: h,
+		fill: "transparent",
+		stroke: this.borderColor,
+		strokeSize: 4,
+                selectable: true,
+//                lockMovementX : true,
+//                lockMovementY: true,
+//                lockScalingX: true,
+//                lockScalingY: true,
+                lockRotation: true,
+                isBlock: false
+	});
+        rect.on('mousedown', function(opt) {
+            rect.isBlock = !rect.isBlock;
+            updateCallback(rect.isBlock);
+            if(rect.isBlock){
+                rect.set("fill",'#ff0000');
+            }else{
+                rect.set("fill",'transparent');
+            }
+            fabricObj.discardActiveObject();
+            fabricObj.renderAll(); 
+            console.log("rect.isBlock "+rect.isBlock)
+            console.log("rect.fill "+rect.fill)
+        });
+        rect.on('moved', function(opt) {
+            console.log("rect.isBlock "+rect.left+","+rect.top+","+rect.width+","+rect.height)
+        });
+        rect.on('scaled', function(opt) {
+            console.log("rect.isBlock "+rect.left+","+rect.top+","+rect.width+","+rect.height)
+        });
+	fabricObj.add(rect);
 }
 
 PDFAnnotate.prototype.loadFromJSON = function(jsonData) {
