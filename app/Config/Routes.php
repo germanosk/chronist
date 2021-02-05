@@ -34,6 +34,7 @@ $routes->get('/', 'Home::index');
 
 $routes->resource('chroniclesheet');
 $routes->resource('pdftemplate');
+$routes->resource('report');
 /**
  * --------------------------------------------------------------------
  * Additional Routing
