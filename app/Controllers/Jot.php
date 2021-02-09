@@ -15,9 +15,8 @@ class Jot extends BaseController {
         helper('obsfuscator');
         $data = ['sheets' => $sheets,
             'baseurl' => base_url(),
-            'fileLocation' => $this->request->getFile("/")];
+            'jotfields' => lang("JotFields.fields")];
         obsfucateIds($data["sheets"], 'idChronicleSheet');
-        echo $parser->setData($data)->render('jot_mode');
+        echo $parser->setData($data)->render('jot_mode', ['cascadeData'=>true]);
     }
-
 }

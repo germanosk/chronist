@@ -282,6 +282,34 @@ PDFAnnotate.prototype.insertText = function(updateCallback, content, posX, posY,
     var inst = this;
     var fabricObj = this.fabricObjects[inst.active_canvas];
     
+    var text = new fabric.IText(content, {
+        left: posX,
+        top: posY,
+        width : w,
+        height : h,
+        fill: this.color,
+        fontSize: this.font_size,
+        defaultFontSize: this.font_size,
+        selectable: true,
+        lockMovementX : true,
+        lockMovementY: true,
+        lockScalingX: true,
+        lockScalingY: true,
+        lockRotation: true,
+        fixedWidth: w
+    });
+    text.on('changed', function(opt) {
+         findBestFit(text, updateCallback);
+    });
+    findBestFit(text, updateCallback);
+    fabricObj.add(text);
+    return text;
+}
+
+PDFAnnotate.prototype.insertTextBox = function(updateCallback, content, posX, posY, w, h){
+    var inst = this;
+    var fabricObj = this.fabricObjects[inst.active_canvas];
+    
     var text = new fabric.Textbox(content, {
         left: posX,
         top: posY,
@@ -299,19 +327,24 @@ PDFAnnotate.prototype.insertText = function(updateCallback, content, posX, posY,
         fixedWidth: w
     });
     text.on('changed', function(opt) {
-        var t1 = text;
-        updateCallback(t1.text);
-        console.log(t1.fixedWidth);
-        if (t1.width > t1.fixedWidth) {
-          t1.fontSize *= t1.fixedWidth / (t1.width + 1);
-          t1.width = t1.fixedWidth;
-        }
-        else{
-            t1.fontSize = t1.defaultFontSize;
-        }
+         findBestFit(text, updateCallback);
     });
+    findBestFit(text, updateCallback);
     fabricObj.add(text);
     return text;
+}
+
+function findBestFit(text, updateCallback){
+    var t1 = text;
+    updateCallback(t1.text);
+    console.log(t1.fixedWidth);
+    if (t1.width >= t1.fixedWidth) {
+      t1.fontSize *= t1.fixedWidth / (t1.width + 1);
+      t1.width = t1.fixedWidth;
+    }
+    else{
+        t1.fontSize = t1.defaultFontSize;
+    }
 }
 
 PDFAnnotate.prototype.insertBlock = function(updateCallback, posX, posY, w, h){
