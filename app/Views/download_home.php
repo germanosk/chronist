@@ -2,7 +2,7 @@
 <html class="no-js">
     <head>
         <link rel="icon" href="{baseurl}/favicon.ico" type="image/x-icon">
-        <title>Jot mode</title>
+        <title>Download Sheets as form</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Compressed CSS -->
@@ -23,25 +23,36 @@
             <div class="grid-x grid-padding-x">
                 <div class="medium-8 small-12 cell medium-offset-2">
                     <h1 class="text-center">Pathfinder Society's Chronist</h1>
+                    <h3 class="text-center">Download adventure sheet as a form</h3>
                 </div>
                     
                 <div class="medium-8 small-12 cell medium-offset-2">
-                    <a href="./jot" class="button large expanded"> Fast Mode </a>
+                    <label>Adventure
+                        <select id="chronicleSelection">
+                            <option value="---" selected="true"> -- SELECT -- </option>
+                            {sheets}
+                            <option value="{idChronicleSheet}">{chronicleName}</option>
+                            {/sheets}
+                        </select>
+                    </label>
                 </div>
 
                 <div class="medium-8 small-12 cell medium-offset-2">
-                    <a href="./download" class="button large expanded"> Download sheets as form </a>
+                    <a onclick="goToSheet()" class="button large expanded"> Download sheets as form </a>
                 </div>
             </div>
         </div>
 
+                
         <script>
+            var baseurl = "{baseurl}"
+            var pdf;
             $(document).foundation();
-
+            function goToSheet(){
+                window.open(baseurl+'/download/sheet/'+ $("#chronicleSelection").val(), '_blank'); 
+            }
         </script>
 
-        <script src="{baseurl}/assets/js/foundation.datepicker.js" type="text/javascript"></script>
-        <script src="{baseurl}/assets/js/script.js" ></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>

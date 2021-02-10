@@ -9,9 +9,18 @@ use App\Models\ReportSheetFieldModel;
 class Download extends BaseController {
     
     public function index() {
+        
+        $parser = \Config\Services::parser();
+
+        $sheet = new ChronicleSheetModel();
+        $sheets = $sheet->findAll();
+
         helper('obsfuscator');
-        echo obfuscateId(1);
-//        throw new \Exception("This page is not found!");
+        $data = ['sheets' => $sheets,
+            'baseurl' => base_url(),
+            'jotfields' => lang("JotFields.fields")];
+        obsfucateIds($data["sheets"], 'idChronicleSheet');
+        echo $parser->setData($data)->render('download_home', ['cascadeData'=>true]);
     }
     
     public function Report($id = null){
@@ -24,27 +33,40 @@ class Download extends BaseController {
         }catch(\Exception $e){
             throw new \Exception("Report not found!");
         }
-        $reportModel= new ReportModel();
-        $data = $reportModel->where('idChronicleSheet', $id)->first();
-        if(!$data){
+        $reportModel = new ReportModel();
+        $reportData = $reportModel->where('idReport', $id)->first();
+        $reportSheetFieldModel= new ReportSheetFieldModel();
+        
+        $result = $reportSheetFieldModel->where('idReport', $id)->findAll();
+        if(!$result){
             throw new \Exception("Report not found!");
         }
+        
+        foreach ($result as $key => $value) {
+            $reportSheetFieldData[$value['idAdventureField']] = $value; 
+        }
+        
+        $this->GeneratePDF($reportData['idChronicleSheet'], $reportSheetFieldData); 
     }
     
     public function Sheet($id = null){
-        $ofuscatedID = $id;
         helper('obsfuscator');
         desofuscateId($id);
+        
+        $this->GeneratePDF($id);        
+    }
+    
+    private function GeneratePDF($idChronicleSheet, $reportData = array()) {
+        
         $chronicleModel = new ChronicleSheetModel();
-        $adventureData = $chronicleModel->where('idChronicleSheet', $id)->first();
+        $adventureData = $chronicleModel->where('idChronicleSheet', $idChronicleSheet)->first();
         if(!$adventureData){
             throw new \Exception("Adventure not found!");
         }
         
         $fieldModel = new SheetFieldsModel();
-        $result = $fieldModel->where('idChronicleSheet', $id)->findAll();
+        $result = $fieldModel->where('idChronicleSheet', $idChronicleSheet)->findAll();
         $fieldsData = array();
-        $reportData = array();
        
         foreach ($result as $key => $value) {
             $fieldsData[$value['idAdventureField']] = $value; 

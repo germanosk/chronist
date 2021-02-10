@@ -30,12 +30,16 @@ class TCPDFModel extends setasign\Fpdi\Tcpdf\Fpdi{
                 case 'gmField':
                     if(empty($reportData[$key]) || empty($reportData[$key]["value"]))
                     {
-                        $this->addTextField($value["posX"], $value["posY"], $value["width"], $value["height"],  $pageW, $pageH, $value["fieldName"], 20);
+                        $fSize = empty($value["fontSize"]) ? 20 : $value["fontSize"];
+                        $this->addTextField($value["posX"], $value["posY"], $value["width"], $value["height"],  $pageW, $pageH, $value["fieldName"], $fSize);
                     }else{
-                        $this->addCel($value["posX"], $value["posY"], $value["width"], $value["height"],  $pageW, $pageH, "tes");
+                        $this->addCel($value["posX"], $value["posY"], $value["width"], $value["height"],  $pageW, $pageH, $reportData[$key]["value"]);
                     }
                     break;
                 case 'reward':
+                    if(empty($reportData[$key]["value"]) || $reportData[$key]["value"] === "false"){
+                        break;
+                    }
                     $this->SetFillColor(255,255,255);
                     $this->adjustPositions($_varX, $_varY, $_varW, $_varH, $value["posX"], $value["posY"], $value["width"], $value["height"], $pageW, $pageH);
                     $this->Rect($_varX, $_varY, $_varW, $_varH, 'F');
