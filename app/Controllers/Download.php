@@ -13,7 +13,7 @@ class Download extends BaseController {
         $parser = \Config\Services::parser();
 
         $sheet = new ChronicleSheetModel();
-        $sheets = $sheet->findAll();
+        $sheets = $sheet->orderBy('chronicleName', 'asc')->findAll();
 
         helper('obsfuscator');
         $data = ['sheets' => $sheets,
@@ -41,9 +41,8 @@ class Download extends BaseController {
         if(!$result){
             throw new \Exception("Report not found!");
         }
-        
         foreach ($result as $key => $value) {
-            $reportSheetFieldData[$value['idAdventureField']] = $value; 
+            $reportSheetFieldData[$value['idAdventureField']] = $value;
         }
         
         $this->GeneratePDF($reportData['idChronicleSheet'], $reportSheetFieldData); 
@@ -68,14 +67,18 @@ class Download extends BaseController {
         $result = $fieldModel->where('idChronicleSheet', $idChronicleSheet)->findAll();
         $fieldsData = array();
        
+        $name =$adventureData["chronicleName"];
         foreach ($result as $key => $value) {
-            $fieldsData[$value['idAdventureField']] = $value; 
+            $fieldsData[$value['idAdventureField']] = $value;
+            if($value["fieldName"]==="characterName" && !empty($reportData[$value['idAdventureField']])){
+                $name = $reportData[$value['idAdventureField']]["value"]."_".$name;
+            }
         }
-        
+        $name = str_replace(" ", "_", $name);
+
         helper('pdf');
-        $pdf = openPDF($fieldsData, $reportData, ROOTPATH."/public/assets/template/".$adventureData["pdfURL"]);
-        $name = 'Sheet.pdf';
-        return $response->download($name, $pdf);
+        $this->response->setHeader('Content-Type', 'application/pdf'); 
+        return openPDF($fieldsData, $reportData, ROOTPATH."/public/assets/template/".$adventureData["pdfURL"], $name);
     }
 
 }

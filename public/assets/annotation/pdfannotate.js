@@ -337,7 +337,6 @@ PDFAnnotate.prototype.insertTextBox = function(updateCallback, content, posX, po
 function findBestFit(text, updateCallback){
     var t1 = text;
     updateCallback(t1.text);
-    console.log(t1.fixedWidth);
     if (t1.width >= t1.fixedWidth) {
       t1.fontSize *= t1.fixedWidth / (t1.width + 1);
       t1.width = t1.fixedWidth;
@@ -366,10 +365,10 @@ PDFAnnotate.prototype.insertBlock = function(updateCallback, posX, posY, w, h){
 		stroke: this.borderColor,
 		strokeSize: 4,
                 selectable: true,
-//                lockMovementX : true,
-//                lockMovementY: true,
-//                lockScalingX: true,
-//                lockScalingY: true,
+                lockMovementX : true,
+                lockMovementY: true,
+                lockScalingX: true,
+                lockScalingY: true,
                 lockRotation: true,
                 isBlock: false
 	});
@@ -383,14 +382,6 @@ PDFAnnotate.prototype.insertBlock = function(updateCallback, posX, posY, w, h){
             }
             fabricObj.discardActiveObject();
             fabricObj.renderAll(); 
-            console.log("rect.isBlock "+rect.isBlock)
-            console.log("rect.fill "+rect.fill)
-        });
-        rect.on('moved', function(opt) {
-            console.log("rect.isBlock "+rect.left+","+rect.top+","+rect.width+","+rect.height)
-        });
-        rect.on('scaled', function(opt) {
-            console.log("rect.isBlock "+rect.left+","+rect.top+","+rect.width+","+rect.height)
         });
 	fabricObj.add(rect);
 }

@@ -3,16 +3,14 @@ use setasign\Fpdi\PdfReader;
 use setasign\Fpdi\Tcpdf\Fpdi;
 use tecnickcom\TCPDF;
 
-function openPDF($fieldsData, $reportData, $filePath){
+function openPDF($fieldsData, $reportData, $filePath, $fileName){
     $obj = new TCPDFModel();
-    $obj->generateTemplate($fieldsData, $reportData, $filePath);
+    $obj->generateTemplate($fieldsData, $reportData, $filePath, $fileName);
 }
-
-
 
 class TCPDFModel extends setasign\Fpdi\Tcpdf\Fpdi{
     
-    public function generateTemplate($fieldsData, $reportData, $filePath){
+    public function generateTemplate($fieldsData, $reportData, $filePath, $fileName){
         $pageW = 1206; 
         $pageH = 1566;
         $this->setSourceFile($filePath);
@@ -51,8 +49,8 @@ class TCPDFModel extends setasign\Fpdi\Tcpdf\Fpdi{
         }
         
         ob_end_clean();
-
-        return $this->Output('generated.pdf', 'I');
+        
+        return $this->Output($fileName.'.pdf', 'I');
     }
     
     private function addCel($posX, $posY, $cellW, $cellH, $pageW, $pageH, $text){
@@ -94,6 +92,7 @@ class TCPDFModel extends setasign\Fpdi\Tcpdf\Fpdi{
     }
     
     private function SetBestFontSize($width, $defaultFontSize, $text){
+        $text = iconv('UTF-8', 'ISO-8859-1', $text);
         $x = $defaultFontSize;    // Will hold the font size
         $utfText = utf8_decode( $text );
         $this->SetFontSize($x);

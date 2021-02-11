@@ -6,13 +6,14 @@ use CodeIgniter\API\ResponseTrait;
 use App\Models\ReportModel;
 use App\Models\ReportSheetFieldModel;
 use App\Models\SheetFieldsModel;
+use CodeIgniter\I18n\Time;
 
 
 
 class Report extends ResourceController {
 
     use ResponseTrait;
-
+    
     public function index() {
         echo"INDEX";
     }
@@ -23,12 +24,11 @@ class Report extends ResourceController {
         desofuscateKeys($report);
         $idChronicleSheet  = $this->request->getPost("sheet");
         desofuscateId($idChronicleSheet );
-        echo $idChronicleSheet ;
-        print_r($report) ;
+        
         $reportData = [
             'idChronicleSheet' => $idChronicleSheet , 
             'eventName' =>  $this->request->getPost("eventName"),  
-            'eventDate' =>  $this->request->getPost("eventDate")
+            'eventDate' =>  Time::createFromFormat('d-m-Y', $this->request->getPost("eventDate"))
         ];
         $reportModel= new ReportModel();
         $reportID = $reportModel->insert($reportData);
@@ -42,8 +42,10 @@ class Report extends ResourceController {
             ];
             $reportSheetFieldModel->insert($data);
         }
-        $result = ["idReport" => $reportID];
-        return $this->respond($result);
+        
+        $result = ["idReport" => obfuscateId($reportID)];
+//        $success = ["success" =>$result];
+        return $this->respondCreated($result);
     }
 
 }

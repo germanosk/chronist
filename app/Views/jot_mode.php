@@ -77,9 +77,18 @@
             <li class="accordion-item " data-accordion-item>
                 <a href="#sheet" class="accordion-title">Character's sheets</a>
                 <div id='sheet-content' class="accordion-content" data-tab-content>
-                    <label>Adventure             
-                        <div id="pdf-container"></div>
-                    </label>
+                    
+                    <div class="small-12 column hide" id="players_report">
+                        <h3>Download</h3>
+                    </div>
+                    <div class="small-12 column">
+                        <label>Adventure
+                            <div class="small-12 column">
+                                <a id="submit_report_button" onclick="jsfunction()" href="javascript:void(0);" class="button">Submit Report</a>
+                            </div>
+                            <div id="pdf-container"></div>
+                        </label>
+                    </div>
                 </div>
             </li>
         </ul>

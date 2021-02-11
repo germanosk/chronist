@@ -8,10 +8,11 @@ $("#chronicleSelection").on('change', function () {
     if (selectedId === "---") {
         return;
     }
+    $("#submit_report_button").attr('disabled','disabled');
+
     $('#report-accordion').foundation('down', $('#sheet-content'));
     $.get("./chroniclesheet/" + selectedId)
             .done(function (data) {
-
                 pdf = new PDFAnnotate(containerLocation, baseurl + "/assets/template/" + data.pdfURL, {
                     onPageUpdated(page, oldData, newData) {
                     },
@@ -29,7 +30,6 @@ $("#chronicleSelection").on('change', function () {
                                     break;
                                 case "reward":
                                     let block = pdf.insertBlock(updateCallback, parseInt(value.posX), parseInt(value.posY), parseInt(value.width), parseInt(value.height));
-
                                     report[value.idAdventureField] = false;
                                     break;
                                 case "gmField":
@@ -41,16 +41,12 @@ $("#chronicleSelection").on('change', function () {
                             }
                         });
                         reports.push(report);
+                        $("#submit_report_button").removeAttr('disabled');
                     },
                     scale: 2,
                     pageImageCompression: "SLOW", // FAST, MEDIUM, SLOW(Helps to control the new PDF file size)
                 });
-                let formHTML = "<form id='formID' target='_blank' action='./report/create/' method='post'><input type='submit' value='Submit'></form>";
-                formHTML = '<a onclick="jsfunction()" href="javascript:void(0);" class="button">Submit</a>';
-                $("#" + containerLocation).append(formHTML);
-
             });
-
 });
 
 function jsfunction() {
@@ -60,7 +56,7 @@ function jsfunction() {
                         && checkIsFilled("#gmName","You need to fill the Game master's name")
                         && checkIsFilled("#gmNumber", "You need to fill the Game master's Organized Play number") 
     
-    if(!allMainFieldsFilled){
+    if(!allMainFieldsFilled || $("#submit_report_button").attr('disabled') === "disabled"){
         return;
     }
     
@@ -73,16 +69,15 @@ function jsfunction() {
             eventCode:$("#eventCode").val(),
             eventDate:$("#eventDate").val(),
             gmName:$("#gmName").val(),
-            gmNumber:$("#gmNumber").val()}
+            gmNumber:$("#gmNumber").val()},
+        success : function(response){ 
+            $("#players_report").removeClass("hide");
+            $("#players_report").append('<a href="' + baseurl + '/download/report/' + response.idReport + '" target="_blank">Download</a>');
+        }
     })
-            .done(function (data) {
-                //alert( "Data Loaded: " + data );
-
-                var newWindow = window.open("", "new window", "width=200, height=100");
-
-                //write the data to the document of the newWindow
-                newWindow.document.write(data);
-            });
+    .done(function (data) {
+        $("#submit_report_button").removeAttr('disabled');
+    });
 }
 
 function checkIsFilled(id,message)
@@ -107,7 +102,7 @@ $('.form-floating-label input, .form-floating-label textarea').blur(function () 
 
 $('#eventDate').fdatepicker({
 		initialDate: '',
-		format: 'mm-dd-yyyy',
+		format: 'dd-mm-yyyy',
 		disableDblClickSelection: true,
 		leftArrow:'<<',
 		rightArrow:'>>',
