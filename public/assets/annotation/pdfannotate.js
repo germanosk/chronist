@@ -278,7 +278,11 @@ PDFAnnotate.prototype.serializePdf = function() {
 	return JSON.stringify(inst.fabricObjects, null, 4);
 }
 
-PDFAnnotate.prototype.insertText = function(updateCallback, content, posX, posY, w, h){
+PDFAnnotate.prototype.insertText = function(updateCallback, content, posX, posY, w, h, defaultFontSize){
+    defaultFontSize = Number.isNaN(defaultFontSize) ? 16 : defaultFontSize;
+    defaultFontSize *= 2;
+    console.log("IText "+defaultFontSize)
+
     var inst = this;
     var fabricObj = this.fabricObjects[inst.active_canvas];
     
@@ -288,8 +292,8 @@ PDFAnnotate.prototype.insertText = function(updateCallback, content, posX, posY,
         width : w,
         height : h,
         fill: this.color,
-        fontSize: this.font_size,
-        defaultFontSize: this.font_size,
+        fontSize: defaultFontSize,
+        defaultFontSize: defaultFontSize,
         selectable: true,
         lockMovementX : true,
         lockMovementY: true,
@@ -298,6 +302,7 @@ PDFAnnotate.prototype.insertText = function(updateCallback, content, posX, posY,
         lockRotation: true,
         fixedWidth: w
     });
+    text.setText= function(content){ this.text = content; fabricObj.renderAll();findBestFit(text, updateCallback);fabricObj.renderAll();}
     text.on('changed', function(opt) {
          findBestFit(text, updateCallback);
     });
@@ -306,7 +311,10 @@ PDFAnnotate.prototype.insertText = function(updateCallback, content, posX, posY,
     return text;
 }
 
-PDFAnnotate.prototype.insertTextBox = function(updateCallback, content, posX, posY, w, h){
+PDFAnnotate.prototype.insertTextBox = function(updateCallback, content, posX, posY, w, h, defaultFontSize){
+    defaultFontSize = Number.isNaN(defaultFontSize) ? 16 : defaultFontSize;
+    defaultFontSize *= 2;
+    console.log("TextBox "+defaultFontSize)
     var inst = this;
     var fabricObj = this.fabricObjects[inst.active_canvas];
     
@@ -316,8 +324,8 @@ PDFAnnotate.prototype.insertTextBox = function(updateCallback, content, posX, po
         width : w,
         height : h,
         fill: this.color,
-        fontSize: this.font_size,
-        defaultFontSize: this.font_size,
+        fontSize: defaultFontSize,
+        defaultFontSize: defaultFontSize,
         selectable: true,
         lockMovementX : true,
         lockMovementY: true,
@@ -326,6 +334,7 @@ PDFAnnotate.prototype.insertTextBox = function(updateCallback, content, posX, po
         lockRotation: true,
         fixedWidth: w
     });
+    text.setText= function(content){ this.text = content; fabricObj.renderAll();findBestFit(text, updateCallback);fabricObj.renderAll();}
     text.on('changed', function(opt) {
          findBestFit(text, updateCallback);
     });
@@ -337,12 +346,12 @@ PDFAnnotate.prototype.insertTextBox = function(updateCallback, content, posX, po
 function findBestFit(text, updateCallback){
     var t1 = text;
     updateCallback(t1.text);
-    if (t1.width >= t1.fixedWidth) {
+    if (t1.width > t1.fixedWidth) {
       t1.fontSize *= t1.fixedWidth / (t1.width + 1);
       t1.width = t1.fixedWidth;
-    }
-    else{
+    }else{
         t1.fontSize = t1.defaultFontSize;
+        t1.width = t1.fixedWidth;
     }
 }
 

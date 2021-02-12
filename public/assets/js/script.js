@@ -2,6 +2,10 @@ var reports = [];
 var selectedId;
 
 $("#chronicleSelection").on('change', function () {
+    downloadSheet();
+});
+
+function downloadSheet(){
     selectedId = $("#chronicleSelection").val();
     var containerLocation = "pdf-container";
     $("#" + containerLocation).empty();
@@ -24,8 +28,8 @@ $("#chronicleSelection").on('change', function () {
                             };
                             switch (value.type) {
                                 case "text":
-                                    let txt = pdf.insertTextBox(updateCallback, value.defaultValue, parseInt(value.posX), parseInt(value.posY), parseInt(value.width), parseInt(value.height));
-                                    txt.backgroundColor = '#ff00ff';
+                                    let txt = pdf.insertTextBox(updateCallback, value.defaultValue, parseInt(value.posX), parseInt(value.posY), parseInt(value.width), parseInt(value.height), parseInt(value.fontSize));
+                                    txt.backgroundColor = "#8fbff178";
                                     report[value.idAdventureField] = value.defaultValue;
                                     break;
                                 case "reward":
@@ -34,9 +38,13 @@ $("#chronicleSelection").on('change', function () {
                                     break;
                                 case "gmField":
                                     let gmFieldVal = $("#"+value.fieldName).val()
-                                    let gmField = pdf.insertText(updateCallback, gmFieldVal, parseInt(value.posX), parseInt(value.posY), parseInt(value.width), parseInt(value.height));
+                                    let gmField = pdf.insertText(updateCallback, gmFieldVal, parseInt(value.posX), parseInt(value.posY), parseInt(value.width), parseInt(value.height), parseInt(value.fontSize));
                                     gmField.backgroundColor = 'transparent';
                                     gmField.selectable = false;
+                                    $("#"+value.fieldName).change(function() {
+                                        gmField.setText($(this).val())
+                                        console.log($(this).val())
+                                    });
                                     break;
                             }
                         });
@@ -47,9 +55,9 @@ $("#chronicleSelection").on('change', function () {
                     pageImageCompression: "SLOW", // FAST, MEDIUM, SLOW(Helps to control the new PDF file size)
                 });
             });
-});
+}
 
-function jsfunction() {
+function sendReport() {
     allMainFieldsFilled =  checkIsFilled("#eventName","You need to fill the Event name")
                         && checkIsFilled("#eventCode","You need to fill the Event code")
                         && checkIsFilled("#eventDate","You need to fill the Event date")
@@ -73,6 +81,7 @@ function jsfunction() {
         success : function(response){ 
             $("#players_report").removeClass("hide");
             $("#players_report").append('<a href="' + baseurl + '/download/report/' + response.idReport + '" target="_blank">Download</a>');
+            downloadSheet();
         }
     })
     .done(function (data) {
@@ -110,5 +119,4 @@ $('#eventDate').fdatepicker({
 		closeButton: true
 	}).on("changeDate", function(){
             $(this).parent().addClass('has-value');
-            console.log("foi")
         });

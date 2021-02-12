@@ -26,12 +26,12 @@ class TCPDFModel extends setasign\Fpdi\Tcpdf\Fpdi{
             switch ($value['type']) {
                 case 'text':
                 case 'gmField':
+                    $fSize = empty($value["fontSize"]) ? 16 : $value["fontSize"];
                     if(empty($reportData[$key]) || empty($reportData[$key]["value"]))
                     {
-                        $fSize = empty($value["fontSize"]) ? 20 : $value["fontSize"];
                         $this->addTextField($value["posX"], $value["posY"], $value["width"], $value["height"],  $pageW, $pageH, $value["fieldName"], $fSize);
                     }else{
-                        $this->addCel($value["posX"], $value["posY"], $value["width"], $value["height"],  $pageW, $pageH, $reportData[$key]["value"]);
+                        $this->addCel($value["posX"], $value["posY"], $value["width"], $value["height"],  $pageW, $pageH, $reportData[$key]["value"], $fSize);
                     }
                     break;
                 case 'reward':
@@ -53,7 +53,7 @@ class TCPDFModel extends setasign\Fpdi\Tcpdf\Fpdi{
         return $this->Output($fileName.'.pdf', 'I');
     }
     
-    private function addCel($posX, $posY, $cellW, $cellH, $pageW, $pageH, $text){
+    private function addCel($posX, $posY, $cellW, $cellH, $pageW, $pageH, $text, $fontSize =16){
         
         $this->adjustPositions($_varX, $_varY, $_varW, $_varH, $posX, $posY, $cellW, $cellH, $pageW, $pageH);
         
@@ -63,7 +63,7 @@ class TCPDFModel extends setasign\Fpdi\Tcpdf\Fpdi{
         
         $this->cMargin = 0;
         
-        $this->SetBestFontSize($_varW, 16, $text);
+        $this->SetBestFontSize($_varW, $fontSize, $text);
         $this->Cell($_varW, $_varH, $text,0,0,"L"); 
         $this->SetAutoPageBreak(true);
     }

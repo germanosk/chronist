@@ -84,7 +84,7 @@
                     <div class="small-12 column">
                         <label>Adventure
                             <div class="small-12 column">
-                                <a id="submit_report_button" onclick="jsfunction()" href="javascript:void(0);" class="button">Submit Report</a>
+                                <a id="submit_report_button" onclick="sendReport()" href="javascript:void(0);" class="button">Submit Report</a>
                             </div>
                             <div id="pdf-container"></div>
                         </label>
