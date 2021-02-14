@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html class="no-js">
     <head>
-        <link rel="icon" href="{baseurl}/favicon.ico" type="image/x-icon">
-        <title>Jot mode</title>
+        <link rel="icon" href="./favicon.ico" type="image/x-icon">
+        <title>Chronist</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Compressed CSS -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-        <link rel="stylesheet" href="{baseurl}/assets/foundation-icons/foundation-icons.css" />
-        <link rel="stylesheet" href="{baseurl}/assets/css/style.css" />
-        <link rel="stylesheet" href="{baseurl}/assets/css/foundation.datepicker.css" />
+        <link rel="stylesheet" href="./assets/foundation-icons/foundation-icons.css" />
+        <link rel="stylesheet" href="./assets/css/style.css" />
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css" integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I=" crossorigin="anonymous">
 
@@ -32,16 +31,28 @@
                 <div class="medium-8 small-12 cell medium-offset-2">
                     <a href="./download" class="button large expanded"> Download sheets as form </a>
                 </div>
+                
             </div>
         </div>
-
+        <footer>
+            <div class="grid-container">
+                <div class="grid-x grid-padding-x">
+                    <div class="medium-8 small-12 cell medium-offset-2">
+                        <p class="text-justify ">
+                            This website uses trademarks and/or copyrights owned by Paizo Inc., used under Paizo's Community Use Policy <a href="paizo.com/communityuse">(paizo.com/communityuse)</a>. We are expressly prohibited from charging you to use or access this content. This website is not published, endorsed, or specifically approved by Paizo. For more information about Paizo Inc. and Paizo products, visit <a href="paizo.com">paizo.com</a>.
+                        </p>
+                        <p class="text-center">
+                            Chronist is a open-source project publicly available at <a href="https://github.com/germanosk/chronist" class="button secondary"><i class="fi-social-github large"></i> GitHub</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
         <script>
             $(document).foundation();
 
         </script>
 
-        <script src="{baseurl}/assets/js/foundation.datepicker.js" type="text/javascript"></script>
-        <script src="{baseurl}/assets/js/script.js" ></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
@@ -49,7 +60,5 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.3.0/fabric.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.2.0/jspdf.umd.min.js"></script>
 
-        <script src="{baseurl}/assets/annotation/arrow.fabric.js"></script>
-        <script src="{baseurl}/assets/annotation/pdfannotate.js"></script>
     </body>
 </html>

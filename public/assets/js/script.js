@@ -1,11 +1,12 @@
 var reports = [];
 var selectedId;
-
+var playerName, characterName, organizedPlay;
+var reportCount = 0;
 $("#chronicleSelection").on('change', function () {
     downloadSheet();
 });
-
 function downloadSheet(){
+    playerName = "", characterName = "",organizedPlay = "";
     selectedId = $("#chronicleSelection").val();
     var containerLocation = "pdf-container";
     $("#" + containerLocation).empty();
@@ -15,8 +16,13 @@ function downloadSheet(){
     $("#submit_report_button").attr('disabled','disabled');
 
     $('#report-accordion').foundation('down', $('#sheet-content'));
-    $.get("./chroniclesheet/" + selectedId)
-            .done(function (data) {
+    
+    $.ajax({
+        type: "GET",
+        url:"./chroniclesheet/" + selectedId,
+        headers: {'X-Requested-With': 'XMLHttpRequest'}
+    })  
+        .done(function (data) {
                 pdf = new PDFAnnotate(containerLocation, baseurl + "/assets/template/" + data.pdfURL, {
                     onPageUpdated(page, oldData, newData) {
                     },
@@ -31,6 +37,17 @@ function downloadSheet(){
                                     let txt = pdf.insertTextBox(updateCallback, value.defaultValue, parseInt(value.posX), parseInt(value.posY), parseInt(value.width), parseInt(value.height), parseInt(value.fontSize));
                                     txt.backgroundColor = "#8fbff178";
                                     report[value.idAdventureField] = value.defaultValue;
+                                    switch (value.fieldName) {
+                                          case "playerName":
+                                               playerName = value.idAdventureField;
+                                              break;
+                                          case "characterName":
+                                              characterName = value.idAdventureField;
+                                              break;
+                                          case "playerNumber":
+                                              organizedPlay = value.idAdventureField;
+                                              break;
+                                    }
                                     break;
                                 case "reward":
                                     let block = pdf.insertBlock(updateCallback, parseInt(value.posX), parseInt(value.posY), parseInt(value.width), parseInt(value.height));
@@ -48,7 +65,7 @@ function downloadSheet(){
                                     break;
                             }
                         });
-                        reports.push(report);
+                        reports[0] = (report);
                         $("#submit_report_button").removeAttr('disabled');
                     },
                     scale: 2,
@@ -80,7 +97,13 @@ function sendReport() {
             gmNumber:$("#gmNumber").val()},
         success : function(response){ 
             $("#players_report").removeClass("hide");
-            $("#players_report").append('<a href="' + baseurl + '/download/report/' + response.idReport + '" target="_blank">Download</a>');
+            reportCount++;
+            var sufix = reports[0][characterName] ? reports[0][characterName] +"'s Report" : "";
+            sufix = !sufix && reports[0][playerName] ? reports[0][playerName] +"'s Report": sufix;
+            sufix = !sufix && reports[0][organizedPlay] ? reports[0][organizedPlay]+"'s Report" : sufix;
+            sufix = sufix ? " report #"+reportCount+" - "+sufix :" report #"+reportCount;
+            var linkName = "Download "+sufix;
+            $("#players_report").append('<p><a href="' + baseurl + '/download/report/' + response.idReport + '" target="_blank">'+linkName+'</a></p>');
             downloadSheet();
         }
     })
