@@ -67,11 +67,11 @@ class Download extends BaseController {
         $result = $fieldModel->where('idChronicleSheet', $idChronicleSheet)->findAll();
         $fieldsData = array();
        
-        $name =$adventureData["chronicleName"];
+        $name = $adventureData["chronicleCode"]."_".$adventureData["chronicleName"];
         foreach ($result as $key => $value) {
             $fieldsData[$value['idAdventureField']] = $value;
-            if($value["fieldName"]==="characterName" && !empty($reportData[$value['idAdventureField']])){
-                $name = $reportData[$value['idAdventureField']]["value"]."_".$name;
+            if($value["fieldName"]==="characterName" && !empty($reportData[$value['idAdventureField']]) &&!empty($reportData[$value['idAdventureField']]["value"]) ){
+                $name = $name."_".$reportData[$value['idAdventureField']]["value"];
             }
         }
         $name = str_replace(" ", "_", $name);
