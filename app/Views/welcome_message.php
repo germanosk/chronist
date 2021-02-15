@@ -39,10 +39,14 @@
                 <div class="grid-x grid-padding-x">
                     <div class="medium-8 small-12 cell medium-offset-2">
                         <p class="text-justify ">
+                            <small>
                             This website uses trademarks and/or copyrights owned by Paizo Inc., used under Paizo's Community Use Policy <a href="paizo.com/communityuse">(paizo.com/communityuse)</a>. We are expressly prohibited from charging you to use or access this content. This website is not published, endorsed, or specifically approved by Paizo. For more information about Paizo Inc. and Paizo products, visit <a href="paizo.com">paizo.com</a>.
+                            </small>
                         </p>
                         <p class="text-center">
-                            Chronist is a open-source project publicly available at <a href="https://github.com/germanosk/chronist" class="button secondary"><i class="fi-social-github large"></i> GitHub</a>
+                            <small>
+                            Chronist is an open-source project publicly available at <a href="https://github.com/germanosk/chronist" class="button secondary"><i class="fi-social-github large"></i> GitHub</a>
+                            </small>
                         </p>
                     </div>
                 </div>
