@@ -2,6 +2,7 @@ var reports = [];
 var selectedId;
 var playerName, characterName, organizedPlay;
 var reportCount = 0;
+var touchedPDF = false;
 $("#chronicleSelection").on('change', function () {
     downloadSheet();
 });
@@ -31,6 +32,10 @@ function downloadSheet(){
                         $.each(data.fields, function (key, value) {
                             updateCallback = function (val) {
                                 report[value.idAdventureField] = val;
+                                if(value.type!=="gmField" && val){
+                                    touchedPDF = true;
+                                }
+                                
                             };
                             switch (value.type) {
                                 case "text":
@@ -74,7 +79,7 @@ function downloadSheet(){
             });
 }
 
-function sendReport() {
+function submitReport() {
     allMainFieldsFilled =  checkIsFilled("#eventName","You need to fill the Event name")
                         && checkIsFilled("#eventCode","You need to fill the Event code")
                         && checkIsFilled("#eventDate","You need to fill the Event date")
@@ -84,6 +89,14 @@ function sendReport() {
     if(!allMainFieldsFilled || $("#submit_report_button").attr('disabled') === "disabled"){
         return;
     }
+    if(!touchedPDF){
+       popup.open();
+       return; 
+    }
+    sendReport();
+}
+
+function sendReport(){
     
     $.ajax({
         type: "POST",
@@ -119,6 +132,15 @@ function checkIsFilled(id,message)
         return false;
     }
     return true;
+}
+
+function checkPDFEmpty(){
+     for (var key in reports[0]) {
+         if(reports[0][key] ){
+             return false;
+         }
+     }
+     return true;
 }
 
 // Foundation related

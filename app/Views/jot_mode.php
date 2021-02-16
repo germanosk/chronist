@@ -2,7 +2,7 @@
 <html class="no-js">
     <head>
         <link rel="icon" href="{baseurl}/favicon.ico" type="image/x-icon">
-        <title>Jot mode</title>
+        <title>Chronist - on jot mode</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Compressed CSS -->
@@ -15,7 +15,8 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css" integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I=" crossorigin="anonymous">
 
         <!-- Compressed JavaScript -->
-        <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/js/foundation.min.js" integrity="sha256-pRF3zifJRA9jXGv++b06qwtSqX1byFQOLjqa2PTEb2o=" crossorigin="anonymous"></script>
+<script src="{baseurl}/assets/js/vendor.js"></script>
+<script src="{baseurl}/assets/js/foundation.js"></script>
     </head>
 
     <body>
@@ -84,7 +85,7 @@
                     <div class="small-12 column">
                         <label>Adventure
                             <div class="small-12 column">
-                                <a id="submit_report_button" onclick="sendReport()" href="javascript:void(0);" class="button">Submit Report</a>
+                                <a id="submit_report_button" onclick="submitReport()" href="javascript:void(0);" class="button">Submit Report</a>
                             </div>
                             <div id="pdf-container"></div>
                         </label>
@@ -93,14 +94,23 @@
             </li>
         </ul>
 
-
+        <div class="reveal" id="modalEmptyPDF" data-reveal>
+          <h1>Hey your report is empty!</h1>
+            <p class="lead">You can click in the fields of the PDF to fill it, don't worry if you don't fill all fields. We will add some form fields to the PDF file to be filled later.</p>
+            <p class="lead">You can click on boons / rewards to block it in the final PDF.</p>
+          <button class="button alert"  onclick="submitReport()" href="javascript:void(0);">SEND ANYWAY</button>
+          <button class="button"  onclick="popup.close()" href="javascript:void(0);">CLOSE</button>
+          <button class="close-button" data-close aria-label="Close reveal" type="button">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
 
 
         <script>
             var baseurl = "{baseurl}"
             var pdf;
             $(document).foundation();
-
+            var popup = new Foundation.Reveal($('#modalEmptyPDF'));
         </script>
 
         <script src="{baseurl}/assets/js/foundation.datepicker.js" type="text/javascript"></script>
