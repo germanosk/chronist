@@ -381,18 +381,52 @@ PDFAnnotate.prototype.insertBlock = function(updateCallback, posX, posY, w, h){
                 lockRotation: true,
                 isBlock: false
 	});
+        var text = new fabric.Textbox("click to lock this", {
+            left: posX,
+            top: posY,
+            width : w,
+            height : h,
+            fill: '#2c1c1c',
+            backgroundColor:"#5cb25cd0",
+            fontSize: 20,
+            defaultFontSize: 50,
+            selectable: true,
+            lockMovementX : true,
+            lockMovementY: true,
+            lockScalingX: true,
+            lockScalingY: true,
+            lockRotation: true,
+            textAlign : "center",
+            fixedWidth: w
+        });
+        text.on('mousedown', function(opt) {
+            rect.isBlock = !rect.isBlock;
+            updateCallback(rect.isBlock);
+            if(rect.isBlock){
+                text.text = ("click to unlock this")
+                rect.set("fill",'#dc3232e0');
+            }else{
+                text.text = ("click to lock this")
+                rect.set("fill",'transparent');
+            }
+            fabricObj.discardActiveObject();
+            fabricObj.renderAll(); 
+        });
         rect.on('mousedown', function(opt) {
             rect.isBlock = !rect.isBlock;
             updateCallback(rect.isBlock);
             if(rect.isBlock){
-                rect.set("fill",'#ff0000');
+                text.text = ("click to unlock this")
+                rect.set("fill",'#dc3232e0');
             }else{
+                text.text = ("click to lock this")
                 rect.set("fill",'transparent');
             }
             fabricObj.discardActiveObject();
             fabricObj.renderAll(); 
         });
 	fabricObj.add(rect);
+        fabricObj.add(text);
 }
 
 PDFAnnotate.prototype.loadFromJSON = function(jsonData) {
