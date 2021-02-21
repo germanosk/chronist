@@ -146,8 +146,10 @@ function submitClassicReport(){
                 }
                 else if(value.fieldName.includes("reputation_")){
                     var res = value.fieldName.split("_");
-                    if(res[1] <= "3"){
-                        reports[0][value.idAdventureField] =$('#faction'+res[1] ).val()+" "+$('#reputation'+res[1] ).val();
+                    if( res[1] <= "3" 
+                        && $('#faction'+res[1] ).val()
+                        && $('#reputation'+res[1] ).val()){
+                            reports[0][value.idAdventureField] =$('#faction'+res[1] ).val()+" "+$('#reputation'+res[1] ).val();    
                     }
                 }
             }
