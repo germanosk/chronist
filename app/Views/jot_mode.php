@@ -20,8 +20,14 @@
     </head>
 
     <body>
-        <h1 class="text-center">Society's Chronist on jot mode</h1>
+        <h1 class="text-center">Society's Chronist on fast mode</h1>
 
+        <nav aria-label="You are here:" role="navigation">
+            <ul class="breadcrumbs">
+                <li><a href="{baseurl}">Home</a></li>
+                <li>Fast Mode</li>
+            </ul>
+        </nav>
         <ul id='report-accordion' class="accordion" data-accordion data-allow-all-closed="true">
             <li class="accordion-item is-active" data-accordion-item>
                 <a href="#gm" class="accordion-title"><h4>GM's data</h4></a>
