@@ -6,6 +6,10 @@ class Home extends BaseController
 {
 	public function index()
 	{
-		return view('welcome_message');
+            helper('visit');
+            addVisit($this->request->getUserAgent()->getAgentString(),
+                     $this->request->getIPAddress(), 
+                    "home");
+            return view('welcome_message');
 	}
 }

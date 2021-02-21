@@ -429,6 +429,55 @@ PDFAnnotate.prototype.insertBlock = function(updateCallback, posX, posY, w, h){
         fabricObj.add(text);
 }
 
+
+PDFAnnotate.prototype.insertRewardLabel = function(label, posX, posY, w, h){
+        
+	var fabricObj = this.fabricObjects[this.active_canvas];
+	this.active_tool = 4;
+	if (this.fabricObjects.length > 0) {
+		$.each(this.fabricObjects, function (index, fabricObj) {
+			fabricObj.isDrawingMode = false;
+		});
+	}
+
+	var rect = new fabric.Rect({
+                left: posX,
+                top: posY,
+		width: w,
+		height: h,
+		fill: "#4c3c3cd0",
+		stroke: this.borderColor,
+		strokeSize: 4,
+                selectable: true,
+                lockMovementX : true,
+                lockMovementY: true,
+                lockScalingX: true,
+                lockScalingY: true,
+                lockRotation: true,
+                isBlock: false
+	});
+        var text = new fabric.Textbox(label, {
+            left: posX,
+            top: posY,
+            width : w,
+            height : h,
+            fill: '#2c1c1c',
+            backgroundColor:"#5cb25cd0",
+            fontSize: 20,
+            defaultFontSize: 50,
+            selectable: true,
+            lockMovementX : true,
+            lockMovementY: true,
+            lockScalingX: true,
+            lockScalingY: true,
+            lockRotation: true,
+            textAlign : "center",
+            fixedWidth: w
+        });
+	fabricObj.add(rect);
+        fabricObj.add(text);
+}
+
 PDFAnnotate.prototype.loadFromJSON = function(jsonData) {
 	var inst = this;
 	$.each(inst.fabricObjects, function (index, fabricObj) {
