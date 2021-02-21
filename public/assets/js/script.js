@@ -3,6 +3,8 @@ var selectedId;
 var playerName, characterName, organizedPlay;
 var reportCount = 0;
 var touchedPDF = false;
+var sheetData;
+
 $("#chronicleSelection").on('change', function () {
     downloadSheet();
 });
@@ -23,6 +25,7 @@ function downloadSheet(){
         headers: {'X-Requested-With': 'XMLHttpRequest'}
     })  
         .done(function (data) {
+                sheetData = data.valueOf();
                 loadDetailedPDF(data);
                 loadClassicPDF(data);
             });
@@ -43,7 +46,6 @@ function loadDetailedPDF(data){
                     if(value.type!=="gmField" && val){
                         touchedPDF = true;
                     }
-
                 };
                 switch (value.type) {
                     case "text":
@@ -73,7 +75,6 @@ function loadDetailedPDF(data){
                         gmField.selectable = false;
                         $("#"+value.fieldName).change(function() {
                             gmField.setText($(this).val())
-                            console.log($(this).val())
                         });
                         break;
                 }
@@ -102,7 +103,7 @@ function loadClassicPDF(data){
                         case "reward":
                             classic_pdf.insertRewardLabel("Reward "+label, parseInt(value.posX), parseInt(value.posY), parseInt(value.width), parseInt(value.height));
                             $("#reward-grid")
-                                .append('<div class="large-2 cell "><input type="checkbox" id="'+value.idAdventureField+'" name="reward'+label+'" checked>  <label for="reward'+label+'">Reward '+label+'</label></div>');
+                                .append('<div class="large-2 cell "><input type="checkbox" id="'+value.fieldName+'" name="reward'+label+'" checked>  <label for="reward'+label+'">Reward '+label+'</label></div>');
                         label = String.fromCharCode(label.charCodeAt() + 1);
                         break;
                  }
@@ -128,6 +129,30 @@ function submitReport() {
        return; 
     }
     sendReport();
+}
+
+function submitClassicReport(){
+    $.each(sheetData.fields, function (key, value) {
+        if(value.type === "reward"){
+          reports[0][value.idAdventureField] = $('#'+value.fieldName).is(":checked")
+          ? "false" : "true";
+        }
+        else{
+          reports[0][value.idAdventureField] = $('#'+value.fieldName).val();
+        }
+      });
+      
+      sendReport();
+    
+    //resetting fields that are not gm fields
+    $.each(sheetData.fields, function (key, value) {
+        if(value.type === "reward"){
+          $('#'+value.fieldName).checked = true;
+        }
+        else if (value.type !== "gmField"){
+          $('#'+value.fieldName).val("");
+        }
+      });
 }
 
 function setupDetailsSwitch(){

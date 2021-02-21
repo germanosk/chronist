@@ -27,9 +27,12 @@ class TCPDFModel extends setasign\Fpdi\Tcpdf\Fpdi{
             switch ($value['type']) {
                 case 'text':
                 case 'gmField':
-                    if(empty($reportData[$key]) || empty($reportData[$key]["value"]))
+                    if(empty($reportData[$key]) || $value["editable"])
                     {
-                        $this->addTextField($value["posX"], $value["posY"], $value["width"], $value["height"],  $pageW, $pageH, $value["fieldName"], $fSize);
+                        $textContent =  empty($reportData[$key])
+                                ? "" 
+                                : $reportData[$key]["value"]; 
+                        $this->addTextField($value["posX"], $value["posY"], $value["width"], $value["height"], $pageW, $pageH, $value["fieldName"], $textContent, $fSize);
                     }else{
                         $this->addCel($value["posX"], $value["posY"], $value["width"], $value["height"],  $pageW, $pageH, $reportData[$key]["value"], $fSize);
                     }
@@ -70,11 +73,11 @@ class TCPDFModel extends setasign\Fpdi\Tcpdf\Fpdi{
         $this->cMargin = 0;
         
         $this->SetBestFontSize($_varW, $fontSize, $text);
-        $this->Cell($_varW, $_varH, $text,0,0,"L"); 
+        $this->Cell($_varW, $_varH, $text,0,0,"C"); 
         $this->SetAutoPageBreak(true);
     }
     
-    private function addTextField($posX, $posY, $cellW, $cellH, $pageW, $pageH, $fieldId, $fontSize =16){
+    private function addTextField($posX, $posY, $cellW, $cellH, $pageW, $pageH, $fieldId, $text, $fontSize =16){
         
         $this->adjustPositions($_varX, $_varY, $_varW, $_varH, $posX, $posY, $cellW, $cellH, $pageW, $pageH);
         
@@ -85,7 +88,7 @@ class TCPDFModel extends setasign\Fpdi\Tcpdf\Fpdi{
         $this->cMargin = 0;
         
         $this->SetFontSize($fontSize);
-        $this->TextField($fieldId, $_varW, $_varH);
+        $this->TextField($fieldId, $_varW, $_varH,array(),array('v'=>$text));
         $this->SetAutoPageBreak(true);
     }
     

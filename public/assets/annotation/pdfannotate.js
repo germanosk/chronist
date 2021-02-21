@@ -281,7 +281,6 @@ PDFAnnotate.prototype.serializePdf = function() {
 PDFAnnotate.prototype.insertText = function(updateCallback, content, posX, posY, w, h, defaultFontSize){
     defaultFontSize = Number.isNaN(defaultFontSize) ? 16 : defaultFontSize;
     defaultFontSize *= 2;
-    console.log("IText "+defaultFontSize)
 
     var inst = this;
     var fabricObj = this.fabricObjects[inst.active_canvas];
@@ -314,7 +313,6 @@ PDFAnnotate.prototype.insertText = function(updateCallback, content, posX, posY,
 PDFAnnotate.prototype.insertTextBox = function(updateCallback, content, posX, posY, w, h, defaultFontSize){
     defaultFontSize = Number.isNaN(defaultFontSize) ? 16 : defaultFontSize;
     defaultFontSize *= 2;
-    console.log("TextBox "+defaultFontSize)
     var inst = this;
     var fabricObj = this.fabricObjects[inst.active_canvas];
     
