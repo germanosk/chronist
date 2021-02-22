@@ -132,6 +132,16 @@ function submitReport() {
 }
 
 function submitClassicReport(){
+    allMainFieldsFilled =  checkIsFilled("#eventName","You need to fill the Event name")
+                        && checkIsFilled("#eventCode","You need to fill the Event code")
+                        && checkIsFilled("#eventDate","You need to fill the Event date")
+                        && checkIsFilled("#gmName","You need to fill the Game master's name")
+                        && checkIsFilled("#gmNumber", "You need to fill the Game master's Organized Play number") 
+    
+    if(!allMainFieldsFilled || $("#submit_report_button").attr('disabled') === "disabled"){
+        return;
+    }
+    
     $.each(sheetData.fields, function (key, value) {
         if(value.type === "reward"){
           reports[0][value.idAdventureField] = $('#'+value.fieldName).is(":checked")
