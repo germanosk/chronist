@@ -25,7 +25,14 @@
                     <h1 class="text-center">Pathfinder Society's Chronist</h1>
                     <h3 class="text-center">Download adventure sheet as a form</h3>
                 </div>
-                    
+                
+                <nav aria-label="You are here:" role="navigation">
+                    <ul class="breadcrumbs">
+                        <li><a href="{baseurl}">Home</a></li>
+                        <li>Download adventure sheet as a form</li>
+                    </ul>
+                </nav>
+                
                 <div class="medium-8 small-12 cell medium-offset-2">
                     <label>Adventure
                         <select id="chronicleSelection">

@@ -64,3 +64,9 @@ footer{
    bottom:0;
    width: 100%;
 }
+
+.switch-paddle .switch-active, .switch-paddle .switch-inactive{
+  position: absolute;
+  left: 5rem; 
+  color: #000;
+}

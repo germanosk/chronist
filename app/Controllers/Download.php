@@ -9,6 +9,10 @@ use App\Models\ReportSheetFieldModel;
 class Download extends BaseController {
     
     public function index() {
+        helper('visit');
+        addVisit($this->request->getUserAgent()->getAgentString(),
+                 $this->request->getIPAddress(), 
+                "download home");
         
         $parser = \Config\Services::parser();
 
@@ -24,6 +28,11 @@ class Download extends BaseController {
     }
     
     public function Report($id = null){
+        helper('visit');
+        addVisit($this->request->getUserAgent()->getAgentString(),
+                 $this->request->getIPAddress(), 
+                "download report");
+        
         if($id == null ){
             throw new \Exception("Report not found!");
         }
@@ -49,6 +58,11 @@ class Download extends BaseController {
     }
     
     public function Sheet($id = null){
+        helper('visit');
+        addVisit($this->request->getUserAgent()->getAgentString(),
+                 $this->request->getIPAddress(), 
+                "download sheet");
+        
         helper('obsfuscator');
         desofuscateId($id);
         

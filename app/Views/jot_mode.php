@@ -15,16 +15,22 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css" integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I=" crossorigin="anonymous">
 
         <!-- Compressed JavaScript -->
-<script src="{baseurl}/assets/js/vendor.js"></script>
-<script src="{baseurl}/assets/js/foundation.js"></script>
+        <script src="{baseurl}/assets/js/vendor.js"></script>
+        <script src="{baseurl}/assets/js/foundation.js"></script>
     </head>
 
     <body>
-        <h1 class="text-center">Society's Chronist on jot mode</h1>
+        <h1 class="text-center">Society's Chronist on fast mode</h1>
 
+        <nav aria-label="You are here:" role="navigation">
+            <ul class="breadcrumbs">
+                <li><a href="{baseurl}">Home</a></li>
+                <li>Fast Mode</li>
+            </ul>
+        </nav>
         <ul id='report-accordion' class="accordion" data-accordion data-allow-all-closed="true">
             <li class="accordion-item is-active" data-accordion-item>
-                <a href="#gm" class="accordion-title">GM's data</a>
+                <a href="#gm" class="accordion-title"><h4>GM's data</h4></a>
                 <div class="accordion-content" data-tab-content>
                     <div class="small-12 column">
                         <div class="form-floating-label">
@@ -57,11 +63,11 @@
                         </div>
                     </div>
                 </div>
-                
+
             </li>
 
             <li class="accordion-item " data-accordion-item>
-                <a href="#adventure" class="accordion-title">Adventure Selection</a>
+                <a href="#adventure" class="accordion-title"><h4>Adventure Selection</h4></a>
                 <div class="accordion-content" data-tab-content>
                     <label>Adventure
                         <select id="chronicleSelection">
@@ -73,42 +79,163 @@
                     </label>
                 </div>
             </li>
-            
-            
+
+
             <li class="accordion-item " data-accordion-item>
-                <a href="#sheet" class="accordion-title">Character's sheets</a>
+                <a href="#sheet" class="accordion-title"><h4>Character's sheets</h4></a>
                 <div id='sheet-content' class="accordion-content" data-tab-content>
-                    
+
                     <div class="small-12 column hide" id="players_report">
                         <h3>Download</h3>
                     </div>
                     <div class="small-12 column">
-                        <label>Adventure
+                        <h2>Adventure</h2>
+                        <div class="switch large">
+                            <input class="switch-input" id="classic-detailed" type="checkbox" name="exampleSwitch">
+                            <label class="switch-paddle" for="classic-detailed">
+                                <span class="show-for-sr">MODE</span>
+                                <span class="switch-active" aria-hidden="true">Detailed</span>
+                                <span class="switch-inactive" aria-hidden="true">Classic</span>
+                            </label>
+                        </div>
+
+                        <div id="classic-mode">
+                            <div class="grid-x">
+                                <div class="large-3 cell ">
+                                    <div class="form-floating-label">
+                                        <input type="text" id="playerName" name="playerName" required>
+                                        <label for="playerName">Player Name</label>
+                                    </div>
+                                </div>
+                                <div class="large-3 cell ">
+                                    <div class="form-floating-label">
+                                        <input type="text" id="characterName" name="characterName" required>
+                                        <label for="characterName">Character Name</label>
+                                    </div>
+                                </div>
+                                <div class="large-3 cell ">
+                                    <div class="form-floating-label">
+                                        <input type="text" id="playerNumber" name="playerNumber" required>
+                                        <label for="playerNumber">Player number</label>
+                                    </div>
+                                </div>
+                                <div class="large-3 cell ">
+                                    <div class="form-floating-label">
+                                        <input type="text" id="characterNumber" name="characterNumber" required>
+                                        <label for="characterNumber">Character number</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid-x">
+                                <div class="large-3 cell ">
+                                    <div class="form-floating-label">
+                                        <input type="text" id="gainedXP" name="gainedXP" required>
+                                        <label for="gainedXP">XP gained</label>
+                                    </div>
+                                </div>
+                                <div class="large-3 cell ">
+                                    <div class="form-floating-label">
+                                        <input type="text" id="gainedGP" name="gainedGP" required>
+                                        <label for="gainedGP">GP gained</label>
+                                    </div>
+                                </div>
+                                <div class="large-3 cell ">
+                                    <div class="form-floating-label">
+                                        <input type="text" id="earnIncome" name="earnIncome" required>
+                                        <label for="earnIncome">Earn Income</label>
+                                    </div>
+                                </div>
+                                <div class="large-3 cell ">
+                                    <div class="form-floating-label">
+                                        <input type="text" id="fameEarned" name="fameEarned" required>
+                                        <label for="fameEarned">Fame</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="grid-x">
+                                <div class="large-2 cell ">
+                                    <select id="faction1">
+                                        <option value="" selected="true"> -- SELECT -- </option>
+                                        {factions}
+                                            <option value="{nameFaction}">{nameFaction}</option>
+                                        {/factions}
+                                    </select>
+                                </div>
+                                <div class="large-2 cell ">
+                                    <div class="form-floating-label">
+                                        <input type="text" id="reputation1" name="reputation1" required>
+                                        <label for="reputation1">Reputation</label>
+                                    </div>
+                                </div>
+                                <div class="large-2 cell ">
+                                    <select id="faction2">
+                                        <option value="" selected="true"> -- SELECT -- </option>
+                                        {factions}
+                                            <option value="{nameFaction}">{nameFaction}</option>
+                                        {/factions}
+                                    </select>
+                                </div>
+                                <div class="large-2 cell ">
+                                    <div class="form-floating-label">
+                                        <input type="text" id="reputation2" name="reputation2" required>
+                                        <label for="reputation2">Reputation</label>
+                                    </div>
+                                </div>
+                                <div class="large-2 cell ">
+                                    <select id="faction3">
+                                        <option value="" selected="true"> -- SELECT -- </option>
+                                        {factions}
+                                            <option value="{nameFaction}">{nameFaction}</option>
+                                        {/factions}
+                                    </select>
+                                </div>
+                                <div class="large-2 cell ">
+                                    <div class="form-floating-label">
+                                        <input type="text" id="reputation3" name="reputation3" required>
+                                        <label for="reputation3">Reputation</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="reward-grid" class="grid-x">
+                                
+                            </div>
+                            <div >
+                                <div class="large-12 cell">
+                                    <a id="submit_report_button" onclick="submitClassicReport()" href="javascript:void(0);" class="button">Submit Report</a>
+                                </div>
+                            </div>
+                            <div id="pdf-container-classic"></div>
+
+                        </div>
+
+                        <div id="detailed-mode">
                             <div class="small-12 column">
                                 <a id="submit_report_button" onclick="submitReport()" href="javascript:void(0);" class="button">Submit Report</a>
                             </div>
-                            <div id="pdf-container"></div>
-                        </label>
+                            <div id="pdf-container-detailed"></div>
+                        </div>
                     </div>
                 </div>
             </li>
         </ul>
 
         <div class="reveal" id="modalEmptyPDF" data-reveal>
-          <h1>Hey your report is empty!</h1>
+            <h1>Hey your report is empty!</h1>
             <p class="lead">You can click in the fields of the PDF to fill it, don't worry if you don't fill all fields. We will add some form fields to the PDF file to be filled later.</p>
             <p class="lead">You can click on boons / rewards to block it in the final PDF.</p>
-          <button class="button alert"  onclick="submitReport()" href="javascript:void(0);">SEND ANYWAY</button>
-          <button class="button"  onclick="popup.close()" href="javascript:void(0);">CLOSE</button>
-          <button class="close-button" data-close aria-label="Close reveal" type="button">
-            <span aria-hidden="true">&times;</span>
-          </button>
+            <button class="button alert"  onclick="submitReport()" href="javascript:void(0);">SEND ANYWAY</button>
+            <button class="button"  onclick="popup.close()" href="javascript:void(0);">CLOSE</button>
+            <button class="close-button" data-close aria-label="Close reveal" type="button">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
 
 
         <script>
             var baseurl = "{baseurl}"
-            var pdf;
+            var detailed_pdf,classic_pdf;
             $(document).foundation();
             var popup = new Foundation.Reveal($('#modalEmptyPDF'));
         </script>
