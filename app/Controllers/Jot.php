@@ -16,10 +16,10 @@ class Jot extends BaseController {
         $parser = \Config\Services::parser();
 
         $sheet = new ChronicleSheetModel();
-        $sheets = $sheet->findAll();
+        $sheets = $sheet->orderBy('chronicleName', 'asc')->findAll();
 
         $factionModel = new FactionModel();
-        $factions = $factionModel->findAll();
+        $factions = $factionModel->orderBy('nameFaction', 'asc')->findAll();
         
         helper('obsfuscator');
         $data = ['sheets' => $sheets,

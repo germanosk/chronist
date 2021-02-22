@@ -27,7 +27,9 @@ class TCPDFModel extends setasign\Fpdi\Tcpdf\Fpdi{
             switch ($value['type']) {
                 case 'text':
                 case 'gmField':
-                    if(empty($reportData[$key]) || $value["editable"])
+                    if(empty($reportData[$key])
+                            || empty($reportData[$key]["value"] && $reportData[$key]["value"]!== "0") 
+                            || $value["editable"])
                     {
                         $textContent =  empty($reportData[$key])
                                 ? "" 
@@ -86,8 +88,11 @@ class TCPDFModel extends setasign\Fpdi\Tcpdf\Fpdi{
         $this->SetY($_varY);
         
         $this->cMargin = 0;
-        
-        $this->SetFontSize($fontSize);
+        if(!empty($text)){
+            $this->SetBestFontSize($_varW, $fontSize, $text);
+        }else{
+            $this->SetFontSize($fontSize);
+        }
         $this->TextField($fieldId, $_varW, $_varH,array(),array('v'=>$text));
         $this->SetAutoPageBreak(true);
     }

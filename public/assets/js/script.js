@@ -138,7 +138,21 @@ function submitClassicReport(){
           ? "false" : "true";
         }
         else{
-          reports[0][value.idAdventureField] = $('#'+value.fieldName).val();
+            if($( "#"+value.fieldName ).length){
+                reports[0][value.idAdventureField] = $('#'+value.fieldName).val();
+            }else{
+                if(value.fieldName === "earnIncomeX"){
+                      reports[0][value.idAdventureField] ="Earn income " + $('#earnIncome').val();
+                }
+                else if(value.fieldName.includes("reputation_")){
+                    var res = value.fieldName.split("_");
+                    if( res[1] <= "3" 
+                        && $('#faction'+res[1] ).val()
+                        && $('#reputation'+res[1] ).val()){
+                            reports[0][value.idAdventureField] =$('#faction'+res[1] ).val()+" "+$('#reputation'+res[1] ).val();    
+                    }
+                }
+            }
         }
       });
       
@@ -146,11 +160,24 @@ function submitClassicReport(){
     
     //resetting fields that are not gm fields
     $.each(sheetData.fields, function (key, value) {
-        if(value.type === "reward"){
-          $('#'+value.fieldName).checked = true;
-        }
-        else if (value.type !== "gmField"){
-          $('#'+value.fieldName).val("");
+        if($( "#"+value.fieldName ).length){
+            if(value.type === "reward"){
+                $('#'+value.fieldName).checked = true;
+            }
+            else if (value.type !== "gmField"){
+                $('#'+value.fieldName).val("");
+            }
+        }else{
+            if(value.fieldName === "earnIncomeX"){
+                $('#earnIncome').val("");
+            }
+            else if(value.fieldName.includes("reputation_")){
+                var res = value.fieldName.split("_");
+                if(res[1] <= "3"){
+                    $('#faction'+res[1] ).val("");
+                    $('#reputation'+res[1] ).val("");
+                }
+            }
         }
       });
 }
