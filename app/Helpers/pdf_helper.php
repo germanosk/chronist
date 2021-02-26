@@ -53,6 +53,18 @@ class TCPDFModel extends setasign\Fpdi\Tcpdf\Fpdi{
                         $this->addCheckBox($value["fieldName"], $fSize, $value["posX"], $value["posY"], $value["width"], $value["height"], $pageW, $pageH);
                     }
                     break;
+                case 'event':
+                    $defaultValue = $value["defaultValue"];
+                    
+                    if(empty($reportData[$key])){
+                        $this->addCheckBox($value["fieldName"], $fSize+2, $value["posX"]-3, $value["posY"]+6, $value["width"]+5, $value["height"]+5, $pageW, $pageH);
+                    }
+                    elseif ($reportData[$key]["value"] === "true") {
+                        $this->addCheckmark($value["posX"], $value["posY"], $value["width"], $value["height"], $pageW, $pageH, $value["fieldName"], $fSize);
+                    }
+                    
+                
+                    break;
 
                 default:
                     break;
@@ -106,7 +118,24 @@ class TCPDFModel extends setasign\Fpdi\Tcpdf\Fpdi{
         $this->SetFontSize($fontSize*.5);
         $this->CheckBox($filedName, $_varW, false);
     }
-
+    
+    private function addCheckmark($posX, $posY, $cellW, $cellH, $pageW, $pageH, $fieldId, $fontSize =16){
+        $font = $this->getFontFamily();
+        $this->SetFont('zapfdingbats', '', $fontSize);
+        $this->adjustPositions($_varX, $_varY, $_varW, $_varH, $posX, $posY, $cellW, $cellH, $pageW, $pageH);
+        
+        $this->SetAutoPageBreak(false);
+        $this->SetLeftMargin($_varX);
+        $this->SetY($_varY);
+        
+        $this->cMargin = 0;
+        
+        $this->Cell($_varW, $_varH, "4",0,0,"C"); 
+        $this->SetAutoPageBreak(true);
+        
+        
+        $this->SetFont($font, '', $fontSize);
+    }
 
     private function adjustPositions(&$_varX,&$_varY,&$_varW,&$_varH, $posX, $posY, $cellW, $cellH, $pageW, $pageH){
         $_varX = $posX / $pageW * $this->w;

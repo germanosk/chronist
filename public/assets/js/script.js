@@ -68,6 +68,10 @@ function loadDetailedPDF(data){
                         let block = detailed_pdf.insertBlock(updateCallback, parseInt(value.posX), parseInt(value.posY), parseInt(value.width), parseInt(value.height));
                         report[value.idAdventureField] = false;
                         break;
+                    case "event":
+                        let checkBox = detailed_pdf.insertCheckBox(updateCallback, parseInt(value.posX)-1, parseInt(value.posY)+5, parseInt(value.width), parseInt(value.height));
+                        report[value.idAdventureField] = false;
+                        break;
                     case "gmField":
                         let gmFieldVal = $("#"+value.fieldName).val()
                         let gmField = detailed_pdf.insertText(updateCallback, gmFieldVal, parseInt(value.posX), parseInt(value.posY), parseInt(value.width), parseInt(value.height), parseInt(value.fontSize));
@@ -98,14 +102,21 @@ function loadClassicPDF(data){
         },
         ready() {
             let label = "A";
+            let eventLabel = 1;
              $.each(data.fields, function (key, value) {
                  switch (value.type) {
                         case "reward":
                             classic_pdf.insertRewardLabel("Reward "+label, parseInt(value.posX), parseInt(value.posY), parseInt(value.width), parseInt(value.height));
                             $("#reward-grid")
                                 .append('<div class="large-2 cell "><input type="checkbox" id="'+value.fieldName+'" name="reward'+label+'" checked>  <label for="reward'+label+'">Reward '+label+'</label></div>');
-                        label = String.fromCharCode(label.charCodeAt() + 1);
+                        label = String.fromCharCode(label.charCodeAt() + 1);                       
                         break;
+                        case "event":
+                            classic_pdf.insertRewardLabel("E"+eventLabel, parseInt(value.posX)-10, parseInt(value.posY), parseInt(value.width), parseInt(value.height));
+                            $("#reward-grid")
+                                .append('<div class="large-2 cell "><input type="checkbox" id="'+value.fieldName+'" name="event_'+eventLabel+'" checked>  <label for="event_'+eventLabel+'">Event E'+eventLabel+'</label></div>');
+                            eventLabel++;
+                            break;
                  }
              });
         },
@@ -146,6 +157,10 @@ function submitClassicReport(){
         if(value.type === "reward"){
           reports[0][value.idAdventureField] = $('#'+value.fieldName).is(":checked")
           ? "false" : "true";
+        }else if(value.type === "event")
+        {
+            reports[0][value.idAdventureField] = $('#'+value.fieldName).is(":checked")
+          ? "true" : "false"; 
         }
         else{
             if($( "#"+value.fieldName ).length){
