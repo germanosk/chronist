@@ -428,6 +428,41 @@ PDFAnnotate.prototype.insertBlock = function(updateCallback, posX, posY, w, h){
 }
 
 
+PDFAnnotate.prototype.insertCheckBox = function(updateCallback, posX, posY, w, h){
+        
+	var fabricObj = this.fabricObjects[this.active_canvas];
+	
+	var rect = new fabric.Rect({
+                left: posX,
+                top: posY,
+		width: w,
+		height: h,
+		fill: "transparent",
+		stroke: this.borderColor,
+		strokeSize: 4,
+                selectable: true,
+                lockMovementX : true,
+                lockMovementY: true,
+                lockScalingX: true,
+                lockScalingY: true,
+                lockRotation: true,
+                isBlock: false
+	});
+        rect.on('mousedown', function(opt) {
+            rect.isBlock = !rect.isBlock;
+            updateCallback(rect.isBlock);
+            if(rect.isBlock){
+                rect.set("fill",'#000000');
+            }else{
+                rect.set("fill",'transparent');
+            }
+            fabricObj.discardActiveObject();
+            fabricObj.renderAll(); 
+        });
+	fabricObj.add(rect);
+}
+
+
 PDFAnnotate.prototype.insertRewardLabel = function(label, posX, posY, w, h){
         
 	var fabricObj = this.fabricObjects[this.active_canvas];
