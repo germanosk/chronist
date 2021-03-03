@@ -17,7 +17,7 @@ class Download extends BaseController {
         $parser = \Config\Services::parser();
 
         $sheet = new ChronicleSheetModel();
-        $sheets = $sheet->orderBy('chronicleName', 'asc')->findAll();
+        $sheets = $sheet->orderBy('chronicleCode', 'asc')->findAll();
 
         helper('obsfuscator');
         $data = ['sheets' => $sheets,
