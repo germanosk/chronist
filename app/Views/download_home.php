@@ -38,7 +38,7 @@
                         <select id="chronicleSelection">
                             <option value="---" selected="true"> -- SELECT -- </option>
                             {sheets}
-                            <option value="{idChronicleSheet}">{chronicleName}</option>
+                            <option value="{idChronicleSheet}">{chronicleCode} - {chronicleName}</option>
                             {/sheets}
                         </select>
                     </label>

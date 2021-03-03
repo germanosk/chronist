@@ -16,7 +16,7 @@ class Jot extends BaseController {
         $parser = \Config\Services::parser();
 
         $sheet = new ChronicleSheetModel();
-        $sheets = $sheet->orderBy('chronicleName', 'asc')->findAll();
+        $sheets = $sheet->orderBy('chronicleCode', 'asc')->findAll();
 
         $factionModel = new FactionModel();
         $factions = $factionModel->orderBy('nameFaction', 'asc')->findAll();
