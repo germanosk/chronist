@@ -69,14 +69,97 @@
             <li class="accordion-item " data-accordion-item>
                 <a href="#adventure" class="accordion-title"><h4>Adventure Selection</h4></a>
                 <div class="accordion-content" data-tab-content>
-                    <label>Adventure
-                        <select id="chronicleSelection">
-                            <option value="---" selected="true"> -- SELECT -- </option>
-                            {sheets}
-                            <option value="{idChronicleSheet}">{chronicleCode} - {chronicleName}</option>
-                            {/sheets}
-                        </select>
-                    </label>
+                    
+                    <div class="grid-x">
+                        <div class="small-12 column">
+                            <div class="grid-x" id="switch-toggle-adventure-type">
+                                <div class="small-2 column">
+                                    <div class="switch-toggle-wrapper">
+                                        <div class="switch">
+                                            <input class="switch-input" id="exampleSwitch1" type="checkbox" name="allSwitch" data-toggle-all checked="checked">
+                                            <label class="switch-paddle" for="exampleSwitch1">
+                                                <span class="show-for-sr">Toggle All</span>
+                                            </label>
+                                        </div>
+                                        <span>Toggle All</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="small-2 column">
+                                    <div class="switch-toggle-wrapper">
+                                        <div class="switch">
+                                            <input data-filter="bounty" class="adventure-type-switch switch-input" id="bountySwitch" type="checkbox" name="bountySwitch" checked="checked">
+                                            <label class="switch-paddle" for="bountySwitch">
+                                                <span class="show-for-sr">Bounty</span>
+                                            </label>
+                                        </div>
+                                        <span>Bounty</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="small-2 column">
+                                    <div class="switch-toggle-wrapper">
+                                        <div class="switch">
+                                            <input data-filter="module" class="adventure-type-switch switch-input" id="moduleSwitch" type="checkbox" name="moduleSwitch" checked="checked">
+                                            <label class="switch-paddle" for="moduleSwitch">
+                                                <span class="show-for-sr">Module</span>
+                                            </label>
+                                        </div>
+                                        <span>Module</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="small-2 column">
+                                    <div class="switch-toggle-wrapper">
+                                        <div class="switch">
+                                            <input data-filter="oneshot" class="adventure-type-switch switch-input" id="oneshotSwitch" type="checkbox" name="oneshotSwitch" checked="checked">
+                                            <label class="switch-paddle" for="oneshotSwitch">
+                                                <span class="show-for-sr">One-Shot</span>
+                                            </label>
+                                        </div>
+                                        <span>One-Shot</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="small-2 column">
+                                    <div class="switch-toggle-wrapper">
+                                        <div class="switch">
+                                            <input data-filter="quest" class="adventure-type-switch switch-input" id="questSwitch" type="checkbox" name="questSwitch" checked="checked">
+                                            <label class="switch-paddle" for="questSwitch">
+                                                <span class="show-for-sr">Quest</span>
+                                            </label>
+                                        </div>
+                                        <span>Quest</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="small-2 column">
+                                    <div class="switch-toggle-wrapper">
+                                        <div class="switch">
+                                            <input data-filter="scenario" class="adventure-type-switch switch-input" id="scenarioSwitch" type="checkbox" name="scenarioSwitch" checked="checked">
+                                            <label class="switch-paddle" for="scenarioSwitch">
+                                                <span class="show-for-sr">Scenario</span>
+                                            </label>
+                                        </div>
+                                        <span>Scenario</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="small-12 column">
+                            
+                            <label>Adventure
+                                <select id="chronicleSelection">
+                                    <option value="---" selected="true"> -- SELECT -- </option>
+                                    {sheets}
+                                    <option class="{type}" value="{idChronicleSheet}">{chronicleCode} - {chronicleName}</option>
+                                    {/sheets}
+                                </select>
+                            </label>
+                        </div>
+
+                    </div>
                 </div>
             </li>
 

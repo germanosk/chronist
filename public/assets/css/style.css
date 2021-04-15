@@ -70,3 +70,29 @@ footer{
   left: 5rem; 
   color: #000;
 }
+
+
+
+
+.switch-toggle-wrapper {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 1rem;
+  -webkit-justify-content: left;
+      -ms-flex-pack: left;
+          justify-content: left;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.switch-toggle-wrapper .switch {
+  margin-bottom: 0;
+}
+
+.switch-toggle-wrapper span{
+    padding-left: 0.5rem;
+}
+
+
