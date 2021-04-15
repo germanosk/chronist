@@ -8,6 +8,32 @@ var sheetData;
 $("#chronicleSelection").on('change', function () {
     downloadSheet();
 });
+
+$('#switch-toggle-adventure-type [data-toggle-all]' ).click(function () {
+  $( '#switch-toggle-adventure-type input[type="checkbox"]').prop('checked', this.checked)
+  var active = this.checked;
+  $( ".adventure-type-switch" ).each(function() {
+     var adventureType = $(this).attr('data-filter');
+     filterAdventure(adventureType, active);
+  })
+});
+
+$('.adventure-type-switch ' ).on('change', function () {
+  var adventureType = $(this).attr('data-filter');
+  var active = $(this).prop('checked');
+  console.log("value "+adventureType+" active "+active);
+  filterAdventure(adventureType, active);
+});
+
+function filterAdventure(adventureType, active){
+    if(active){
+        $('option').filter('.'+adventureType).show('3000');
+    }
+    else{
+        $('option').filter('.'+adventureType).hide('3000');
+    }
+}
+
 function downloadSheet(){
     playerName = "", characterName = "",organizedPlay = "";
     selectedId = $("#chronicleSelection").val();
