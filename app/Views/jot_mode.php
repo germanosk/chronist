@@ -73,7 +73,7 @@
                     <div class="grid-x">
                         <div class="small-12 column">
                             <div class="grid-x" id="switch-toggle-adventure-type">
-                                <div class="small-2 column">
+                                <div class="small-12 column">
                                     <div class="switch-toggle-wrapper">
                                         <div class="switch">
                                             <input class="switch-input" id="exampleSwitch1" type="checkbox" name="allSwitch" data-toggle-all checked="checked">
@@ -82,6 +82,18 @@
                                             </label>
                                         </div>
                                         <span>Toggle All</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="small-2 column">
+                                    <div class="switch-toggle-wrapper">
+                                        <div class="switch">
+                                            <input data-filter="ap" class="adventure-type-switch switch-input" id="apSwitch" type="checkbox" name="apSwitch" checked="checked">
+                                            <label class="switch-paddle" for="apSwitch">
+                                                <span class="show-for-sr">Adventure Path</span>
+                                            </label>
+                                        </div>
+                                        <span>Adventure Path</span>
                                     </div>
                                 </div>
                                 
