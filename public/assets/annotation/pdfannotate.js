@@ -463,7 +463,7 @@ PDFAnnotate.prototype.insertCheckBox = function(updateCallback, posX, posY, w, h
 }
 
 
-PDFAnnotate.prototype.insertRewardLabel = function(label, posX, posY, w, h){
+PDFAnnotate.prototype.insertRewardLabel = function(label, posX, posY, w, h, color, id){
         
 	var fabricObj = this.fabricObjects[this.active_canvas];
 	this.active_tool = 4;
@@ -495,7 +495,7 @@ PDFAnnotate.prototype.insertRewardLabel = function(label, posX, posY, w, h){
             width : w,
             height : h,
             fill: '#2c1c1c',
-            backgroundColor:"#5cb25cd0",
+            backgroundColor:color,
             fontSize: 20,
             defaultFontSize: 50,
             selectable: true,
@@ -509,6 +509,16 @@ PDFAnnotate.prototype.insertRewardLabel = function(label, posX, posY, w, h){
         });
 	fabricObj.add(rect);
         fabricObj.add(text);
+        $("#"+id).change(function () 
+               {
+                   if(this.checked){
+                        text.set("backgroundColor", color);
+                    }else{
+                        text.set("backgroundColor",'#fefefed0');
+                    }
+                    fabricObj.discardActiveObject();
+                    fabricObj.renderAll(); 
+               });
 }
 
 PDFAnnotate.prototype.loadFromJSON = function(jsonData) {

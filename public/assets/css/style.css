@@ -95,4 +95,14 @@ footer{
     padding-left: 0.5rem;
 }
 
+.faction-dropdown{
+    height: 100%;
+}
 
+.event input:checked~.switch-paddle {
+    background: #8500ff;
+}
+
+.reward input:checked~.switch-paddle {
+    background: #dd8615;
+}

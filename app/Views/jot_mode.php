@@ -85,7 +85,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="small-2 column">
+                                <div class="small-6 medium-2 column">
                                     <div class="switch-toggle-wrapper">
                                         <div class="switch">
                                             <input data-filter="ap" class="adventure-type-switch switch-input" id="apSwitch" type="checkbox" name="apSwitch" checked="checked">
@@ -97,7 +97,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="small-2 column">
+                                <div class="small-6 medium-2 column">
                                     <div class="switch-toggle-wrapper">
                                         <div class="switch">
                                             <input data-filter="bounty" class="adventure-type-switch switch-input" id="bountySwitch" type="checkbox" name="bountySwitch" checked="checked">
@@ -109,7 +109,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="small-2 column">
+                                <div class="small-6 medium-2 column">
                                     <div class="switch-toggle-wrapper">
                                         <div class="switch">
                                             <input data-filter="module" class="adventure-type-switch switch-input" id="moduleSwitch" type="checkbox" name="moduleSwitch" checked="checked">
@@ -121,7 +121,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="small-2 column">
+                                <div class="small-6 medium-2 column">
                                     <div class="switch-toggle-wrapper">
                                         <div class="switch">
                                             <input data-filter="oneshot" class="adventure-type-switch switch-input" id="oneshotSwitch" type="checkbox" name="oneshotSwitch" checked="checked">
@@ -133,7 +133,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="small-2 column">
+                                <div class="small-6 medium-2 column">
                                     <div class="switch-toggle-wrapper">
                                         <div class="switch">
                                             <input data-filter="quest" class="adventure-type-switch switch-input" id="questSwitch" type="checkbox" name="questSwitch" checked="checked">
@@ -145,7 +145,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="small-2 column">
+                                <div class="small-6 medium-2 column">
                                     <div class="switch-toggle-wrapper">
                                         <div class="switch">
                                             <input data-filter="scenario" class="adventure-type-switch switch-input" id="scenarioSwitch" type="checkbox" name="scenarioSwitch" checked="checked">
@@ -185,13 +185,14 @@
                     </div>
                     <div class="small-12 column">
                         <h2>Adventure</h2>
-                        <div class="switch large">
-                            <input class="switch-input" id="classic-detailed" type="checkbox" name="exampleSwitch">
-                            <label class="switch-paddle" for="classic-detailed">
-                                <span class="show-for-sr">MODE</span>
-                                <span class="switch-active" aria-hidden="true">Detailed</span>
-                                <span class="switch-inactive" aria-hidden="true">Classic</span>
-                            </label>
+                         <div class="switch-toggle-wrapper">
+                            <div class="switch large">
+                                <input class="adventure-type-switch switch-input" id="classic-detailed" type="checkbox" name="classic-detailed">
+                                <label class="switch-paddle" for="classic-detailed">
+                                    <span class="show-for-sr">Interactive Mode</span>
+                                </label>
+                            </div>
+                            <span>Interactive Mode</span>
                         </div>
 
                         <div id="classic-mode">
@@ -251,7 +252,7 @@
                             
                             <div class="grid-x">
                                 <div class="large-2 cell ">
-                                    <select id="faction1">
+                                    <select id="faction1" class="faction-dropdown">
                                         <option value="" selected="true"> -- SELECT -- </option>
                                         {factions}
                                             <option value="{nameFaction}">{nameFaction}</option>
@@ -265,7 +266,7 @@
                                     </div>
                                 </div>
                                 <div class="large-2 cell ">
-                                    <select id="faction2">
+                                    <select id="faction2" class="faction-dropdown">
                                         <option value="" selected="true"> -- SELECT -- </option>
                                         {factions}
                                             <option value="{nameFaction}">{nameFaction}</option>
@@ -279,7 +280,7 @@
                                     </div>
                                 </div>
                                 <div class="large-2 cell ">
-                                    <select id="faction3">
+                                    <select id="faction3" class="faction-dropdown">
                                         <option value="" selected="true"> -- SELECT -- </option>
                                         {factions}
                                             <option value="{nameFaction}">{nameFaction}</option>
@@ -293,9 +294,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="reward-grid" class="grid-x">
+                            
+                            <div id="event-grid" class="grid-x">
                                 
                             </div>
+                            
+                            <div id="reward-grid" class="grid-x">
+                               
+                            </div>
+                            
                             <div >
                                 <div class="large-12 cell">
                                     <a id="submit_report_button" onclick="submitClassicReport()" href="javascript:void(0);" class="button">Submit Report</a>
