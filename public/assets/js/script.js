@@ -121,7 +121,12 @@ function loadClassicPDF(data){
     var containerLocation = "pdf-container-classic";
     
     $("#" + containerLocation).empty();
+    $("#event-grid").empty();
     $("#reward-grid").empty();
+    $("#event-grid").append('<div class="small-12 cell "> <h4>Chronicle events</h4> </div>');
+    $("#reward-grid").append('<div class="small-12 cell"> <h4>Rewards</h4> </div>');
+    $("#event-grid").hide();
+    $("#reward-grid").hide();
     
     classic_pdf = new PDFAnnotate(containerLocation, baseurl + "/assets/template/" + data.pdfURL, {
         onPageUpdated(page, oldData, newData) {
@@ -132,15 +137,17 @@ function loadClassicPDF(data){
              $.each(data.fields, function (key, value) {
                  switch (value.type) {
                         case "reward":
-                            classic_pdf.insertRewardLabel("Reward "+label, parseInt(value.posX), parseInt(value.posY), parseInt(value.width), parseInt(value.height));
-                            $("#reward-grid")
-                                .append('<div class="large-2 cell "><input type="checkbox" id="'+value.fieldName+'" name="reward'+label+'" checked>  <label for="reward'+label+'">Reward '+label+'</label></div>');
+                            $("#reward-grid").show();
+                            var switchText = genSwitchText(value.fieldName, 'reward', 'Reward '+label,'rewardSwitch');
+                            $("#reward-grid").append(switchText);
+                            classic_pdf.insertRewardLabel("Reward "+label, parseInt(value.posX), parseInt(value.posY), parseInt(value.width), parseInt(value.height), "#dd8615d0", value.fieldName);
                         label = String.fromCharCode(label.charCodeAt() + 1);                       
                         break;
                         case "event":
-                            classic_pdf.insertRewardLabel("E"+eventLabel, parseInt(value.posX)-10, parseInt(value.posY), parseInt(value.width), parseInt(value.height));
-                            $("#reward-grid")
-                                .append('<div class="large-2 cell "><input type="checkbox" id="'+value.fieldName+'" name="event_'+eventLabel+'" checked>  <label for="event_'+eventLabel+'">Event E'+eventLabel+'</label></div>');
+                            $("#event-grid").show();
+                            var switchText = genSwitchText(value.fieldName, 'event', 'Event E'+eventLabel,'eventSwitch');
+                            $("#event-grid").append(switchText);
+                            classic_pdf.insertRewardLabel("E"+eventLabel, parseInt(value.posX)-10, parseInt(value.posY), parseInt(value.width), parseInt(value.height), "#8500ffd0", value.fieldName);
                             eventLabel++;
                             break;
                  }
@@ -299,6 +306,19 @@ function checkPDFEmpty(){
          }
      }
      return true;
+}
+
+function genSwitchText(id, className, content, name ){
+    var switchText = ' <div class="switch-toggle-wrapper small-6 medium-2 grid">'+
+        '<div class="switch small '+className+'">'+
+            '<input class="switch-input " id="'+id+'" type="checkbox" name="'+name+'" checked="checked">'+
+            '<label class="switch-paddle " for="'+id+'">'+
+              '<span class="show-for-sr">'+content+'</span>'+
+            '</label>'+
+        '</div>'+
+        '<span>'+content+'</span>'+
+        '</div>';
+    return switchText;
 }
 
 // Foundation related
