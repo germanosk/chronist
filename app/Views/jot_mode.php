@@ -1,7 +1,21 @@
 <!DOCTYPE html>
 <html class="no-js">
     <head>
-        <link rel="icon" href="{baseurl}/favicon.ico" type="image/x-icon">
+        <link rel="apple-touch-icon" sizes="57x57" href="./assets/icon/apple-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="./assets/icon/apple-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="./assets/icon/apple-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="./assets/icon/apple-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="./assets/icon/apple-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="./assets/icon/apple-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="./assets/icon/apple-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="./assets/icon/apple-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="./assets/icon/apple-icon-180x180.png">
+        <link rel="icon" type="image/png" sizes="192x192"  href="./assets/icon/android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="./assets/icon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="./assets/icon/favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="./assets/icon/favicon-16x16.png">
+        <link rel="manifest" href="./assets/icon/manifest.json">
+        <meta name="msapplication-TileImage" content="./assets/icon/ms-icon-144x144.png">
         <title>Chronist - on jot mode</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +34,19 @@
     </head>
 
     <body>
-        <h1 class="text-center">Society's Chronist on fast mode</h1>
+        <div class="grid-x grid-padding-x">
+            <div class="medium-8 small-12 cell medium-offset-2">
+                <div class="grid-x align-middle">
+                    <div class="small-2">
+                        <img src="./assets/icon/apple-icon-180x180.png" alt="chronist logo"/>
+                    </div>
+                    <div class="small-10">
+                         <h1 class="text-center">Society's Chronist on fast mode</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
 
         <nav aria-label="You are here:" role="navigation">
             <ul class="breadcrumbs">
@@ -70,7 +96,7 @@
                 <a href="#adventure" class="accordion-title"><h4>Adventure Selection</h4></a>
                 <div class="accordion-content" data-tab-content>
                     
-                    <div class="grid-x">
+                    <div class="grid-x align-middle">
                         <div class="small-12 column">
                             <div class="grid-x" id="switch-toggle-adventure-type">
                                 <div class="small-12 column">
@@ -159,7 +185,7 @@
                             </div>
                         </div>
                         
-                        <div class="small-12 column">
+                        <div class="small-10 column">
                             
                             <label>Adventure
                                 <select id="chronicleSelection">
@@ -169,6 +195,11 @@
                                     {/sheets}
                                 </select>
                             </label>
+                        </div>
+                        <div class="small-2 column text-center">
+                            <button class="button secondary" type="button" data-tooltip tabindex="1" title="If an adventure is missing you can request it to be included to germanosk#4686 in Discord" data-position="left" data-alignment="top">
+                                missing adventure?
+                            </button>
                         </div>
 
                     </div>
