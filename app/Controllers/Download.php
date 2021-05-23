@@ -5,8 +5,9 @@ use App\Models\ChronicleSheetModel;
 use App\Models\ReportModel;
 use App\Models\SheetFieldsModel;
 use App\Models\ReportSheetFieldModel;
+use App\Interfaces\OwnershipCheckable;
 
-class Download extends BaseController {
+class Download extends BaseController implements OwnershipCheckable {
     
     public function index() {
         helper('visit');
@@ -23,6 +24,8 @@ class Download extends BaseController {
         $data = ['sheets' => $sheets,
             'baseurl' => base_url(),
             'jotfields' => lang("JotFields.fields")];
+        
+        
         obsfucateIds($data["sheets"], 'idChronicleSheet');
         echo $parser->setData($data)->render('download_home', ['cascadeData'=>true]);
     }
@@ -57,14 +60,26 @@ class Download extends BaseController {
         $this->GeneratePDF($reportData['idChronicleSheet'], $reportSheetFieldData); 
     }
     
-    public function Sheet($id = null){
+    public function Sheet($id = null,$confirmationCode = null){
+        
         helper('visit');
+        helper('obsfuscator');
+        helper('ownership');
+        
+        desofuscateId($id);
+        
         addVisit($this->request->getUserAgent()->getAgentString(),
                  $this->request->getIPAddress(), 
                 "download sheet");
         
-        helper('obsfuscator');
-        desofuscateId($id);
+        $ownership = CheckOwnership($id, 
+                        strtoupper($confirmationCode), 
+                        $this->request->getIPAddress(),
+                        $this);
+        
+        if(!$ownership){
+            return false;
+        }
         
         $this->GeneratePDF($id);        
     }
@@ -93,6 +108,28 @@ class Download extends BaseController {
         helper('pdf');
         $this->response->setHeader('Content-Type', 'application/pdf'); 
         return openPDF($fieldsData, $reportData, ROOTPATH."/public/assets/template/".$adventureData["pdfURL"], $name);
+    }
+    
+    private function Error($title, $message, $ip){
+        
+        $data = ['title' => lang($title),
+            'message' => lang($message),
+            'baseurl' => base_url()];
+        
+        $parser = \Config\Services::parser();
+        echo $parser->setData($data)->render('errors/error_message', ['cascadeData'=>true]);
+    }
+
+    public function onTooManyAttempts() {
+        $this->Error("Error.tooManyAttemptsTitle", 
+                "Error.tooManyAttemptsMessage",
+                $this->request->getIPAddress());
+    }
+
+    public function onWrongCode() {
+        $this->Error("Error.wronCodeTitle",
+                "Error.wrongCodeMessage",
+                $this->request->getIPAddress());
     }
 
 }
