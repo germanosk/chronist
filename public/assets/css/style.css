@@ -106,3 +106,10 @@ footer{
 .reward input:checked~.switch-paddle {
     background: #dd8615;
 }
+
+.adventure button{
+    margin-bottom: -0.5rem;
+}
+.adventure a{
+    margin-bottom: -0.5rem;
+}

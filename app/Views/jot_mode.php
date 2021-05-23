@@ -92,7 +92,7 @@
 
             </li>
 
-            <li class="accordion-item " data-accordion-item>
+            <li class="accordion-item adventure" data-accordion-item>
                 <a href="#adventure" class="accordion-title"><h4>Adventure Selection</h4></a>
                 <div class="accordion-content" data-tab-content>
                     
@@ -185,7 +185,7 @@
                             </div>
                         </div>
                         
-                        <div class="small-10 column">
+                        <div class="small-9 medium-10 column">
                             
                             <label>Adventure
                                 <select id="chronicleSelection">
@@ -196,10 +196,19 @@
                                 </select>
                             </label>
                         </div>
-                        <div class="small-2 column text-center">
+                        <div class="small-3 medium-2 column text-center">
                             <button class="button secondary" type="button" data-tooltip tabindex="1" title="If an adventure is missing you can request it to be included to germanosk#4686 in Discord" data-position="left" data-alignment="top">
                                 missing adventure?
                             </button>
+                        </div>
+                        
+                        <div class="small-12 medium-4 column">
+                            <label>Proof of ownership <b>Chronicle Code</b> [Herolab Code]
+                                <input type="text" id="confirmationCode" name="confirmationCode" required>
+                            </label>
+                        </div>
+                        <div class="small-12 medium-2 column">
+                            <a id="validate_button" onclick="validate()" href="javascript:void(0);" class="button">Validate</a>
                         </div>
 
                     </div>
@@ -365,12 +374,22 @@
             </button>
         </div>
 
+        
+        <div class="reveal" id="modalError" data-reveal>
+            <h1 id="errorHeader">Error header</h1>
+            <p class="lead" id="errorMessage">Error message</p>
+            <button class="button"  onclick="errorPopup.close()" href="javascript:void(0);">CLOSE</button>
+            <button class="close-button" data-close aria-label="Close reveal" type="button">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
 
         <script>
             var baseurl = "{baseurl}"
             var detailed_pdf,classic_pdf;
             $(document).foundation();
             var popup = new Foundation.Reveal($('#modalEmptyPDF'));
+            var errorPopup = new Foundation.Reveal($('#modalError'));
         </script>
 
         <script src="{baseurl}/assets/js/foundation.datepicker.js" type="text/javascript"></script>

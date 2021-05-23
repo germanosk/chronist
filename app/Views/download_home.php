@@ -43,6 +43,12 @@
                         </select>
                     </label>
                 </div>
+                
+                <div class="medium-8 small-12 cell medium-offset-2">
+                    <label>Proof of ownership <b>Chronicle Code</b> [Herolab Code]
+                        <input type="text" id="confirmationCode" name="confirmationCode" required>
+                    </label>
+                </div>
 
                 <div class="medium-8 small-12 cell medium-offset-2">
                     <a onclick="goToSheet()" class="button large expanded"> Download sheets as form </a>
@@ -56,7 +62,7 @@
             var pdf;
             $(document).foundation();
             function goToSheet(){
-                window.open(baseurl+'/download/sheet/'+ $("#chronicleSelection").val(), '_blank'); 
+                window.open(baseurl+'/download/sheet/'+ $("#chronicleSelection").val()+'/'+ $("#confirmationCode").val(), '_blank'); 
             }
         </script>
 
