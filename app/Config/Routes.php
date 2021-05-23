@@ -32,7 +32,7 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
-$routes->get('chroniclesheet/(:segment)', 'ChronicleSheet::show/$1');
+$routes->get('chroniclesheet/(:segment)/(:segment)', 'ChronicleSheet::show/$1/$2');
 $routes->resource('pdftemplate');
 $routes->resource('report');
 /**

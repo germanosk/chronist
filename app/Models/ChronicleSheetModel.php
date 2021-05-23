@@ -8,7 +8,7 @@ class ChronicleSheetModel extends Model {
     protected $table = 'chroniclesheet';
     public $primaryKey = 'idChronicleSheet';
     protected $returnType = 'array';
-    protected $allowedFields = ['chronicleCode', 'chronicleName', 'pdfURL', 'language'];
+    protected $allowedFields = ['chronicleCode', 'chronicleName', 'pdfURL', 'language', 'herolabCode'];
     protected $validationRules = [];
     protected $validationMessages = [];
     protected $skipValidation = false;

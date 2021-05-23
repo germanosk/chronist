@@ -6,7 +6,7 @@ var touchedPDF = false;
 var sheetData;
 
 $("#chronicleSelection").on('change', function () {
-    downloadSheet();
+    $('#confirmationCode').focus();
 });
 
 $('#switch-toggle-adventure-type [data-toggle-all]' ).click(function () {
@@ -34,23 +34,47 @@ function filterAdventure(adventureType, active){
     }
 }
 
+function validate(){
+    downloadSheet();
+}
+
 function downloadSheet(){
     playerName = "", characterName = "",organizedPlay = "";
     selectedId = $("#chronicleSelection").val();
-    
+    var confirmationCode = $("#confirmationCode").val();
     if (selectedId === "---") {
         return;
     }
     $("#submit_report_button").attr('disabled','disabled');
-
-    $('#report-accordion').foundation('down', $('#sheet-content'));
     
     $.ajax({
         type: "GET",
-        url:"./chroniclesheet/" + selectedId,
+        url:"./chroniclesheet/" + selectedId+"/"+confirmationCode,
         headers: {'X-Requested-With': 'XMLHttpRequest'}
     })  
+        .fail(function( jqXHR, textStatus ) {
+            var responseObject = jQuery.parseJSON(jqXHR.responseText);
+            console.log(jqXHR);
+            $("#errorHeader").empty();
+            $("#errorMessage").empty();
+            if(responseObject.error === 400){
+                $("#errorHeader").append("Error while checking proof of ownership");
+                $("#errorMessage").append(responseObject.messages.error);
+            }
+            else if(responseObject.error === 404){
+                $("#errorHeader").append("PDF template not found");
+                $("#errorMessage").append(responseObject.messages.error);
+            }
+            else{
+                $("#errorHeader").append("Uncaugth error!");
+                $("#errorMessage").append(textStatus);
+            }
+            errorPopup.open();
+        })
         .done(function (data) {
+                console.log("DONE");
+
+                $('#report-accordion').foundation('down', $('#sheet-content'));
                 sheetData = data.valueOf();
                 loadDetailedPDF(data);
                 loadClassicPDF(data);
